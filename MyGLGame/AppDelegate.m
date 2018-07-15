@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MyGLView.h"
 
 @interface AppDelegate ()
 
@@ -23,5 +24,9 @@
     // Insert code here to tear down your application
 }
 
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication*)sender {
+    [[MyGLView sharedInstance] stopDisplayLink];
+    return NSTerminateNow;
+}
 
 @end

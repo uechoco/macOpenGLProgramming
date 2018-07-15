@@ -10,4 +10,7 @@
 
 @interface MyGLView : NSOpenGLView
 
++ (MyGLView *)sharedInstance;
+- (void)stopDisplayLink;
+
 @end

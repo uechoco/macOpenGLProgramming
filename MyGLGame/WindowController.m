@@ -36,4 +36,9 @@
     }
 }
 
+- (void)windowWillClose:(NSNotification *)notification
+{
+    [NSApp terminate:self];
+}
+
 @end

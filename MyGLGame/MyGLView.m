@@ -10,10 +10,18 @@
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl3.h>
 
+static MyGLView* instance = nil;
+
 @implementation MyGLView {
     NSOpenGLContext* glContext;
     CVDisplayLinkRef displayLink;
     float value;
+    bool hasDisplayLinkStopped;
+}
+
++ (MyGLView *)sharedInstance
+{
+    return instance;
 }
 
 static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
@@ -50,6 +58,7 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
     self = [super initWithFrame:frame pixelFormat:pixelFormat];
     if (self)
     {
+        instance = self;
         [self setWantsBestResolutionOpenGLSurface:YES];
     }
     return self;
@@ -81,6 +90,12 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
     CVDisplayLinkSetOutputCallback(displayLink, &DisplayLinkCallback, (__bridge void*)(self));
     CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
     CVDisplayLinkStart(displayLink);
+}
+
+- (void)stopDisplayLink
+{
+    CVDisplayLinkStop(displayLink);
+    CVDisplayLinkRelease(displayLink);
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
