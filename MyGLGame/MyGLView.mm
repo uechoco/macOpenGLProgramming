@@ -7,6 +7,7 @@
 //
 
 #import "MyGLView.h"
+#include "Game.hpp"
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl3.h>
 
@@ -15,8 +16,8 @@ static MyGLView* instance = nil;
 @implementation MyGLView {
     NSOpenGLContext* glContext;
     CVDisplayLinkRef displayLink;
-    float value;
     bool hasDisplayLinkStopped;
+    Game *pGame;
 }
 
 + (MyGLView *)sharedInstance
@@ -69,11 +70,11 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
     [super prepareOpenGL];
     
     glContext = [self openGLContext];
-    glClearColor(1.f, 0.f, 1.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    [glContext flushBuffer];
 
-    value = 0.0f;
+    pGame = new Game();
+
+
+    [glContext flushBuffer];
 
     // 垂直同期を使用するためには以下2行のコメントアウトを外す
     //GLint swapInt = 1;
@@ -104,21 +105,12 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
     // Drawing code here.
 }
 
-float PingPong(float t)
-{
-    t -= floorf(t / 2.0f) * 2.0f;
-    return 1.0f - fabsf(t - 1.0f);
-}
-
 - (void)render
 {
     [glContext lock];
     [glContext makeCurrentContext];
 
-    glClearColor(1.0f - PingPong(value), PingPong(value), 1.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    value += 0.01f;
+    pGame->Render();
 
     [glContext flushBuffer];
     [glContext unlock];
