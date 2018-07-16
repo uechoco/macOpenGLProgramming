@@ -10,6 +10,7 @@
 		78B4924520FB07620049A647 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B4924420FB07620049A647 /* CoreVideo.framework */; };
 		78B4924820FB8BE70049A647 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78B4924620FB8BE70049A647 /* Game.cpp */; };
 		78B4924B20FB8D780049A647 /* StringSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B4924920FB8D780049A647 /* StringSupport.mm */; };
+		78B4925120FCC8F60049A647 /* Time.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B4924F20FCC8F60049A647 /* Time.mm */; };
 		B6B056A520FAF261004C4490 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B056A420FAF261004C4490 /* AppDelegate.m */; };
 		B6B056A820FAF261004C4490 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B056A720FAF261004C4490 /* ViewController.m */; };
 		B6B056AA20FAF261004C4490 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6B056A920FAF261004C4490 /* Assets.xcassets */; };
@@ -27,6 +28,8 @@
 		78B4924720FB8BE70049A647 /* Game.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Game.hpp; sourceTree = "<group>"; };
 		78B4924920FB8D780049A647 /* StringSupport.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = StringSupport.mm; sourceTree = "<group>"; };
 		78B4924A20FB8D780049A647 /* StringSupport.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StringSupport.hpp; sourceTree = "<group>"; };
+		78B4924F20FCC8F60049A647 /* Time.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Time.mm; sourceTree = "<group>"; };
+		78B4925020FCC8F60049A647 /* Time.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Time.hpp; sourceTree = "<group>"; };
 		B6B056A020FAF261004C4490 /* MyGLGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGLGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B056A320FAF261004C4490 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B6B056A420FAF261004C4490 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -73,6 +76,8 @@
 				B6B056BD20FAF2E2004C4490 /* MyGLView.mm */,
 				78B4924A20FB8D780049A647 /* StringSupport.hpp */,
 				78B4924920FB8D780049A647 /* StringSupport.mm */,
+				78B4924F20FCC8F60049A647 /* Time.mm */,
+				78B4925020FCC8F60049A647 /* Time.hpp */,
 				B6B056A620FAF261004C4490 /* ViewController.h */,
 				B6B056A720FAF261004C4490 /* ViewController.m */,
 				B6B056BF20FAF69B004C4490 /* WindowController.h */,
@@ -196,6 +201,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78B4925120FCC8F60049A647 /* Time.mm in Sources */,
 				B6B056C120FAF69B004C4490 /* WindowController.m in Sources */,
 				B6B056A820FAF261004C4490 /* ViewController.m in Sources */,
 				78B4924B20FB8D780049A647 /* StringSupport.mm in Sources */,

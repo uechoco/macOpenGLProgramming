@@ -8,6 +8,7 @@
 
 #import "MyGLView.h"
 #include "Game.hpp"
+#include "Time.hpp"
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl3.h>
 
@@ -68,6 +69,8 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
 - (void)prepareOpenGL
 {
     [super prepareOpenGL];
+
+    Time::Start();
     
     glContext = [self openGLContext];
 
@@ -114,6 +117,15 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
 
     [glContext flushBuffer];
     [glContext unlock];
+
+    // 経過時間の更新
+    Time::Update();
+
+    // ウィンドウのタイトルを設定するようなGUI操作のコードは、
+    // 基本的にメインスレッド上で実行する必要がある
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self.window setTitle:[NSString stringWithFormat:@"Game (%.2f fps)", Time::fps]];
+    }];
 }
 
 @end

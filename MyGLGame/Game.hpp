@@ -11,6 +11,7 @@
 
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl3.h>
+#include "Time.hpp"
 
 class Game
 {
