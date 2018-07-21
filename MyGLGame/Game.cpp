@@ -10,11 +10,23 @@
 #include "Shader.hpp"
 #include "Input.hpp"
 #include <cmath>
+#include <vector>
+
+struct VertexData
+{
+    GLfloat     pos[3];
+    GLfloat     color[4];
+};
 
 Game::Game()
 {
     // シェーダーのコンパイル
     pProgram = new ShaderProgram("myshader.vsh", "myshader.fsh");
+
+    std::vector<VertexData> data;
+    data.push_back({ { -0.5f, -0.5f, 0.0f }, { 1.0f, 0.0f, 0.0f, 1.0f } });
+    data.push_back({ {  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 0.0f, 1.0f } });
+    data.push_back({ {  0.0f,  0.5f, 0.0f }, { 0.0f, 0.0f, 1.0f, 1.0f } });
 
     // 頂点シェーダに渡すデータ配列を格納するために使うBuffer ObjectをVBOと呼ぶ座標データと色情報データを交互に配置することもできます。
 
@@ -22,23 +34,12 @@ Game::Game()
     glGenBuffers(1, &vbo);
     // 頂点シェーダに渡すデータ配列であることを宣言する(=VBOであると認識させる)
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    GLfloat data[] = {
-        // 頂点1: 左下、赤
-        -0.5f, -0.5f, 0.0f,
-        1.0f, 0.0f, 0.0f, 1.0f,
-        // 頂点2: 右下、緑
-        0.5f, -0.5f, 0.0f,
-        0.0f, 1.0f, 0.0f, 1.0f,
-        // 頂点3: 中央上、青
-        0.f, 0.5f, 0.0f,
-        0.0f, 0.0f, 1.0f, 1.0f,
-    };
     // glBufferData()関数の使い方しだいで、
     // バッファの確保とデータの転送を別々に行うこともできます。
     // また、複数のVBOを用意して、頂点の座標データと色情報のデータを
     // 別々のVBOで管理することもできますが、今回のサンプルのように、
     //
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 7 * 3, data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(VertexData) * data.size(), &data[0], GL_STATIC_DRAW);
 
     // glGenVertexArrays()関数を使ってVAOを作成し、
     // glBindVertexArray()関数を使ってOpenGLのコンテキストにバインドすることで、
@@ -46,9 +47,9 @@ Game::Game()
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     // 頂点属性0: GL_FLOAT を 3個消費。7個間隔。
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 7, (GLfloat*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), ((VertexData *)0)->pos);
     // 頂点属性1: GL_FLOAT を 4個消費。7個間隔。
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 7, ((GLfloat*)0)+3);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), ((VertexData *)0)->color);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
