@@ -7,6 +7,7 @@
 //
 
 #include "Game.hpp"
+#include "Input.hpp"
 #include <cmath>
 
 Game::Game()
@@ -28,11 +29,20 @@ float Game::PingPong(float t)
 
 void Game::Render()
 {
+    if (Input::GetKey(KeyCode::LeftArrow)) {
+        value -= 0.25f * Time::deltaTime;
+    }
+
+    if (Input::GetKey(KeyCode::RightArrow)) {
+        value += 0.25f * Time::deltaTime;
+    }
+
+    if (value < 0.0f) {
+        value = 0.0f;
+    } else if (value > 1.0f) {
+        value = 1.0f;
+    }
+
     glClearColor(1.0f - PingPong(value), PingPong(value), 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-
-    //value += 0.01f;
-    
-    // 変更後
-    value += 0.25f * Time::deltaTime;
 }

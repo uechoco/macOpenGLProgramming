@@ -9,6 +9,7 @@
 #import "MyGLView.h"
 #include "Game.hpp"
 #include "Time.hpp"
+#include "Input.hpp"
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/gl3.h>
 
@@ -70,6 +71,8 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
 {
     [super prepareOpenGL];
 
+    [self.window makeFirstResponder:self];
+
     Time::Start();
     
     glContext = [self openGLContext];
@@ -110,6 +113,8 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (void)render
 {
+    Input::Update();
+
     [glContext lock];
     [glContext makeCurrentContext];
 
