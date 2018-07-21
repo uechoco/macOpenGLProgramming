@@ -13,6 +13,10 @@
 #include <OpenGL/gl3.h>
 #include "Time.hpp"
 
+// Type Dependencies
+class ShaderProgram;
+
+// Type Definitions
 class Game
 {
 public:
@@ -25,11 +29,14 @@ public:
     void Render();
 
 private:
-    static float PingPong(float t);
-
-private:
     float   value1 = 0.f;
     float   value2 = 0.f;
+    //! シェーダープログラム
+    ShaderProgram* pProgram;
+    //! Vertex Buffer Objectのハンドル
+    GLuint  vbo;
+    //! Vertex Array Objectのハンドル
+    GLuint  vao;
 };
 
 #endif /* Game_hpp */

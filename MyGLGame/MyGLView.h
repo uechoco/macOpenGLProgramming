@@ -13,6 +13,9 @@
 
 + (MyGLView *)sharedInstance;
 - (void)stopDisplayLink;
+- (void)pauseDisplayLink;
+- (void)restartDisplayLink;
+- (void)resetViewportSize;
 - (GLKVector2)mousePosition;
 
 @end

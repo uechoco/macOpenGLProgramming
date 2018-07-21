@@ -7,6 +7,7 @@
 //
 
 #import "WindowController.h"
+#import "MyGLView.h"
 
 @interface WindowController ()
 
@@ -39,6 +40,30 @@
 - (void)windowWillClose:(NSNotification *)notification
 {
     [NSApp terminate:self];
+}
+- (void)windowWillEnterFullScreen:(NSNotification *)notification
+{
+    [[MyGLView sharedInstance] pauseDisplayLink];
+}
+
+- (void)windowDidEnterFullScreen:(NSNotification *)notification
+{
+    [[MyGLView sharedInstance] restartDisplayLink];
+}
+
+- (void)windowWillExitFullScreen:(NSNotification *)notification
+{
+    [[MyGLView sharedInstance] pauseDisplayLink];
+}
+
+- (void)windowDidExitFullScreen:(NSNotification *)notification
+{
+    [[MyGLView sharedInstance] restartDisplayLink];
+}
+
+- (void)windowDidResize:(NSNotification *)notification
+{
+    [[MyGLView sharedInstance] resetViewportSize];
 }
 
 @end
