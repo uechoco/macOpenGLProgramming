@@ -7,10 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <GLKit/GLKit.h>
 
 @interface MyGLView : NSOpenGLView
 
 + (MyGLView *)sharedInstance;
 - (void)stopDisplayLink;
+- (GLKVector2)mousePosition;
 
 @end

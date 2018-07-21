@@ -9,6 +9,7 @@
 #ifndef Input_hpp
 #define Input_hpp
 
+#include <GLKit/GLKMath.h>
 #include <cstdlib>
 
 struct KeyCode
@@ -71,14 +72,33 @@ struct KeyCode
         static uint64_t keyDownStateTriggered;
         static uint64_t keyUpStateTriggered;
 
+        static bool     isMouseDown;
+        static bool     isMouseDownOld;
+        static bool     isMouseDownTriggered;
+        static bool     isMouseUpTriggered;
+
+        static bool     isMouseDownRight;
+        static bool     isMouseDownOldRight;
+        static bool     isMouseDownTriggeredRight;
+        static bool     isMouseUpTriggeredRight;
+
     public:
         static bool GetKey(uint64_t keyCode);
         static bool GetKeyDown(uint64_t keyCode);
         static bool GetKeyUp(uint64_t keyCode);
 
+        static bool         GetMouseButton(int button);
+        static bool         GetMouseButtonDown(int button);
+        static bool         GetMouseButtonUp(int button);
+        static GLKVector2   GetMousePosition();
+
     public:
         static void ProcessKeyDown(uint64_t keyCode);
         static void ProcessKeyUp(uint64_t keyCode);
+        static void ProcessMouseDown();
+        static void ProcessMouseUp();
+        static void ProcessMouseDownRight();
+        static void ProcessMouseUpRight();
         static void Update();
 
     };

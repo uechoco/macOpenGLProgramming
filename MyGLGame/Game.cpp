@@ -29,20 +29,12 @@ float Game::PingPong(float t)
 
 void Game::Render()
 {
-    if (Input::GetKey(KeyCode::LeftArrow)) {
-        value -= 0.25f * Time::deltaTime;
+    if (Input::GetMouseButton(0)) {
+        GLKVector2 pos = Input::GetMousePosition();
+        value1 = (pos.x + 1.0f) / 2.0f;
+        value2 = (pos.y + 1.0f) / 2.0f;
     }
 
-    if (Input::GetKey(KeyCode::RightArrow)) {
-        value += 0.25f * Time::deltaTime;
-    }
-
-    if (value < 0.0f) {
-        value = 0.0f;
-    } else if (value > 1.0f) {
-        value = 1.0f;
-    }
-
-    glClearColor(1.0f - PingPong(value), PingPong(value), 1.0f, 1.0f);
+    glClearColor(value1, value2, 1.0f - value1 * value2, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }

@@ -28,7 +28,8 @@ private:
     static float PingPong(float t);
 
 private:
-    float value = 0.f;
+    float   value1 = 0.f;
+    float   value2 = 0.f;
 };
 
 #endif /* Game_hpp */

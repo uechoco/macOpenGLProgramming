@@ -304,6 +304,26 @@
     }
 }
 
+- (void)mouseDown:(NSEvent*)theEvent
+{
+    Input::ProcessMouseDown();
+}
+
+- (void)mouseUp:(NSEvent*)theEvent
+{
+    Input::ProcessMouseUp();
+}
+
+- (void)rightMouseDown:(NSEvent*)theEvent
+{
+    Input::ProcessMouseDownRight();
+}
+
+- (void)rightMouseUp:(NSEvent*)theEvent
+{
+    Input::ProcessMouseUpRight();
+}
+
 - (void)flagsChanged:(NSEvent *)theEvent
 {
     NSUInteger modifierFlags = [theEvent modifierFlags];

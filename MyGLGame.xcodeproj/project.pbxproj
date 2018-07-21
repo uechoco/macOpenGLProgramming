@@ -11,7 +11,7 @@
 		78B4924820FB8BE70049A647 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78B4924620FB8BE70049A647 /* Game.cpp */; };
 		78B4924B20FB8D780049A647 /* StringSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B4924920FB8D780049A647 /* StringSupport.mm */; };
 		78B4925120FCC8F60049A647 /* Time.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B4924F20FCC8F60049A647 /* Time.mm */; };
-		78B4925420FCCC720049A647 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78B4925220FCCC720049A647 /* Input.cpp */; };
+		78B4925420FCCC720049A647 /* Input.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B4925220FCCC720049A647 /* Input.mm */; };
 		B6B056A520FAF261004C4490 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B056A420FAF261004C4490 /* AppDelegate.m */; };
 		B6B056A820FAF261004C4490 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6B056A720FAF261004C4490 /* ViewController.mm */; };
 		B6B056AA20FAF261004C4490 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6B056A920FAF261004C4490 /* Assets.xcassets */; };
@@ -31,7 +31,7 @@
 		78B4924A20FB8D780049A647 /* StringSupport.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StringSupport.hpp; sourceTree = "<group>"; };
 		78B4924F20FCC8F60049A647 /* Time.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Time.mm; sourceTree = "<group>"; };
 		78B4925020FCC8F60049A647 /* Time.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Time.hpp; sourceTree = "<group>"; };
-		78B4925220FCCC720049A647 /* Input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
+		78B4925220FCCC720049A647 /* Input.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Input.mm; sourceTree = "<group>"; };
 		78B4925320FCCC720049A647 /* Input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Input.hpp; sourceTree = "<group>"; };
 		B6B056A020FAF261004C4490 /* MyGLGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGLGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B056A320FAF261004C4490 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -85,7 +85,7 @@
 				B6B056A720FAF261004C4490 /* ViewController.mm */,
 				B6B056BF20FAF69B004C4490 /* WindowController.h */,
 				B6B056C020FAF69B004C4490 /* WindowController.m */,
-				78B4925220FCCC720049A647 /* Input.cpp */,
+				78B4925220FCCC720049A647 /* Input.mm */,
 				78B4925320FCCC720049A647 /* Input.hpp */,
 			);
 			name = GameLibrary;
@@ -212,7 +212,7 @@
 				78B4924B20FB8D780049A647 /* StringSupport.mm in Sources */,
 				B6B056BE20FAF2E2004C4490 /* MyGLView.mm in Sources */,
 				78B4924820FB8BE70049A647 /* Game.cpp in Sources */,
-				78B4925420FCCC720049A647 /* Input.cpp in Sources */,
+				78B4925420FCCC720049A647 /* Input.mm in Sources */,
 				B6B056B020FAF261004C4490 /* main.m in Sources */,
 				B6B056A520FAF261004C4490 /* AppDelegate.m in Sources */,
 			);

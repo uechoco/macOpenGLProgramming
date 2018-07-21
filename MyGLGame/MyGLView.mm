@@ -20,6 +20,8 @@ static MyGLView* instance = nil;
     CVDisplayLinkRef displayLink;
     bool hasDisplayLinkStopped;
     Game *pGame;
+    NSWindow            *window;
+    NSSize              size;
 }
 
 + (MyGLView *)sharedInstance
@@ -71,7 +73,9 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
 {
     [super prepareOpenGL];
 
-    [self.window makeFirstResponder:self];
+    window = self.window;
+    size = self.bounds.size;
+    [window makeFirstResponder:self];
 
     Time::Start();
     
@@ -103,6 +107,17 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
 {
     CVDisplayLinkStop(displayLink);
     CVDisplayLinkRelease(displayLink);
+}
+
+- (GLKVector2)mousePosition
+{
+    NSPoint location = [NSEvent mouseLocation];
+    NSRect rect = NSMakeRect(location.x, location.y, 0.0f, 0.0f);
+    rect = [window convertRectFromScreen:rect];
+    location = rect.origin;
+    location.x = location.x * 2 / size.width - 1.0f;
+    location.y = location.y * 2 / size.height - 1.0f;
+    return GLKVector2Make(location.x, location.y);
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
