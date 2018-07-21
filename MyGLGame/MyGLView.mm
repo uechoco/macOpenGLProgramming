@@ -73,6 +73,32 @@ static CVReturn DisplayLinkCallback(CVDisplayLinkRef displayLink,
 {
     [super prepareOpenGL];
 
+    // OpenGLとGLSLのバージョンを確認する
+    // OpenGL Version: 4.1 INTEL-10.36.19
+    // GLSL Version: 4.10
+    const GLubyte *glVersion = glGetString(GL_VERSION);
+    const GLubyte *glslVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+    printf("OpenGL Version: %s\n", glVersion);
+    printf("GLSL Version: %s\n", glslVersion);
+
+    // テクスチャのユニット個数と最大サイズを確認する
+    // Max Texture Units(シェーダ上でのテクスチャの同時利用可能枚数): 16
+    // Max Texture Size (width/height)(テクスチャの最大横幅と縦幅): 16384
+    GLint maxTextureUnits, maxTextureSize;
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits);
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+    printf("Max Texture Units: %d\n", maxTextureUnits);
+    printf("Max Texture Size (width/height): %d\n", maxTextureSize);
+
+    // インデックス・リスト関係の情報を確認する
+    // Max IndexList Vertices(頂点数): 1048575
+    // Max IndexList Count(インデックス数): 150000
+    GLint maxIndexListVertices, maxIndexListCount;
+    glGetIntegerv(GL_MAX_ELEMENTS_VERTICES, &maxIndexListVertices);
+    glGetIntegerv(GL_MAX_ELEMENTS_INDICES, &maxIndexListCount);
+    printf("Max IndexList Vertices: %d\n", maxIndexListVertices);
+    printf("Max IndexList Count: %d\n", maxIndexListCount);
+
     window = self.window;
     size = self.bounds.size;
     [window makeFirstResponder:self];
