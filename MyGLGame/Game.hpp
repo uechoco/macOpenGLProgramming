@@ -37,6 +37,8 @@ private:
     GLuint  vbo;
     //! Vertex Array Objectのハンドル
     GLuint  vao;
+    //! Index Buffer Objectのハンドル
+    GLuint ibo;
 };
 
 #endif /* Game_hpp */

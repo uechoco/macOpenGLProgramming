@@ -26,30 +26,32 @@ Game::Game()
     std::vector<VertexData> data;
     data.push_back({ { -0.5f, -0.5f, 0.0f }, { 1.0f, 0.0f, 0.0f, 1.0f } });
     data.push_back({ {  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 0.0f, 1.0f } });
-    data.push_back({ {  0.0f,  0.5f, 0.0f }, { 0.0f, 0.0f, 1.0f, 1.0f } });
+    data.push_back({ {  0.5f,  0.5f, 0.0f }, { 0.0f, 0.0f, 1.0f, 1.0f } });
+    data.push_back({ { -0.5f,  0.5f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f } });
 
-    // 頂点シェーダに渡すデータ配列を格納するために使うBuffer ObjectをVBOと呼ぶ座標データと色情報データを交互に配置することもできます。
+    std::vector<GLushort> indices;
+    indices.push_back(0);
+    indices.push_back(1);
+    indices.push_back(2);
+    indices.push_back(2);
+    indices.push_back(3);
+    indices.push_back(0);
 
-    // BufferObjectの生成
+    // VBOの生成
     glGenBuffers(1, &vbo);
-    // 頂点シェーダに渡すデータ配列であることを宣言する(=VBOであると認識させる)
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    // glBufferData()関数の使い方しだいで、
-    // バッファの確保とデータの転送を別々に行うこともできます。
-    // また、複数のVBOを用意して、頂点の座標データと色情報のデータを
-    // 別々のVBOで管理することもできますが、今回のサンプルのように、
-    //
-    glBufferData(GL_ARRAY_BUFFER, sizeof(VertexData) * data.size(), &data[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(VertexData) * data.size(), data.data(), GL_STATIC_DRAW);
 
-    // glGenVertexArrays()関数を使ってVAOを作成し、
-    // glBindVertexArray()関数を使ってOpenGLのコンテキストにバインドすることで、
-    // 以降の頂点指定関係の状態変化がすべてVAOに格納されるようになります。
+    // IBOの生成
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort) * indices.size(), indices.data(), GL_STATIC_DRAW);
+
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
-    // 頂点属性0: GL_FLOAT を 3個消費。7個間隔。
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), ((VertexData *)0)->pos);
-    // 頂点属性1: GL_FLOAT を 4個消費。7個間隔。
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), ((VertexData *)0)->color);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -59,8 +61,11 @@ Game::~Game()
 {
     delete pProgram;
 
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glDeleteBuffers(1, &ibo);
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);
 }
@@ -74,22 +79,18 @@ void Game::Render()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // VAOのバインド
     glBindVertexArray(vao);
     // 0番目と1番目の頂点属性を利用することを指定
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+
     // glDrawArray()関数の第1引数に指定したGL_TRIANGLESで、
     // VBOからストリームされるデータを順番に3個ずつ消費して、
     // 三角形を描画していくことを指定します。
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    //glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    // なお、コンストラクタでVBOをバインドした後に
-    // VAOをバインドしてglGenVertexArrays()関数を呼び出したことによって、
-    // 既にVAOからVBOを参照していますので
-    // （厳密にはVAOの中の各頂点属性からVBOを参照します。
-    // 頂点属性ごとに別個のVBOを参照できます）、
-    // Render()関数で改めてVBOをバインドし直す必要はありません。
-
-
+    // IBOから描画する場合は、第1引数は glDrawArraysと変わらないが、
+    // 第2引数・第3引数はインデックスリストの個数とサイズを指定する
+    // 第4引数は0をポインタとして渡します。
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, (void*)0);
 }
