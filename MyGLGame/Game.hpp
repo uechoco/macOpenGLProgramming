@@ -30,8 +30,6 @@ public:
     void Render();
 
 private:
-    float   value1 = 0.f;
-    float   value2 = 0.f;
     //! シェーダープログラム
     ShaderProgram* pProgram;
     //! Vertex Buffer Objectのハンドル
@@ -41,7 +39,9 @@ private:
     //! Index Buffer Objectのハンドル
     GLuint ibo;
     //! テクスチャ
-    Texture* pTex;
+    Texture* pTex1;
+    Texture* pTex2;
+    float    t;
 };
 
 #endif /* Game_hpp */

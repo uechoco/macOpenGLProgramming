@@ -76,7 +76,7 @@ void ShaderProgram::Use()
     glUseProgram(programHandle);
 }
 
-void ShaderProgram::SetUniform(const std::string &name, int value)
+GLint ShaderProgram::GetUniformLocation(const std::string &name)
 {
     GLint location;
     const auto itr = uniformLocationMap.find(name);
@@ -93,5 +93,17 @@ void ShaderProgram::SetUniform(const std::string &name, int value)
     {
         location = itr->second;
     }
+    return location;
+}
+
+void ShaderProgram::SetUniform(const std::string& name, int value)
+{
+    GLint location = GetUniformLocation(name);
     glUniform1i(location, value);
+}
+
+void ShaderProgram::SetUniform(const std::string& name, float value)
+{
+    GLint location = GetUniformLocation(name);
+    glUniform1f(location, value);
 }

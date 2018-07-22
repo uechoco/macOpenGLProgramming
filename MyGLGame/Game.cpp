@@ -56,21 +56,17 @@ Game::Game()
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), ((VertexData*)0)->uv);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
-    pTex = new Texture("photo.jpg");
-    // 0番目のテクスチャ画像を使うために、「GL_TEXTURE0」という定数を指定して
-    // glActiveTexture()に利用するテクスチャの番号を指定します。
+    pTex1 = new Texture("photo.jpg");
+    pTex2 = new Texture("photo2.jpg");
     glActiveTexture(GL_TEXTURE0);
-    // バインドすることで、GPU上に格納されている複数のテクスチャの中から、
-    // このTextureクラスが管理するテクスチャを
-    // GLSLのtexture()関数で参照できるようになるのです。
-    pTex->Bind();
+    pTex1->Bind();
+    glActiveTexture(GL_TEXTURE1);
+    pTex2->Bind();
     pProgram->Use();
-    // glActiveTexture()関数で0番目のテクスチャ画像を使うと宣言したら、
-    // シェーダ・プログラムの方でもSetUniform()関数を使って
-    // uniform変数のtexに「0」をセットして、
-    // フラグメント・シェーダの中で0番目のテクスチャが
-    // 参照されるように設定しなければいけません。
-    pProgram->SetUniform("tex", 0);
+    pProgram->SetUniform("tex1", 0);
+    pProgram->SetUniform("tex2", 1);
+
+    t = 0.5f;
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -78,7 +74,8 @@ Game::Game()
 
 Game::~Game()
 {
-    delete pTex;
+    delete pTex2;
+    delete pTex1;
     delete pProgram;
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -92,8 +89,21 @@ Game::~Game()
 
 void Game::Render()
 {
+    if (Input::GetKey(KeyCode::LeftArrow)) {
+        t -= 0.5f * Time::deltaTime;
+    }
+    if (Input::GetKey(KeyCode::RightArrow)) {
+        t += 0.5f * Time::deltaTime;
+    }
+    if (t < 0.0f) {
+        t = 0.0f;
+    } else if (t > 1.0f) {
+        t = 1.0f;
+    }
+
     // レンダリングに使用するシェーダをセット
     pProgram->Use();
+    pProgram->SetUniform("t", t);
 
     // 背景の上書き
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

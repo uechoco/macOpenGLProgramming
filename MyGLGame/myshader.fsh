@@ -2,11 +2,14 @@
 
 in vec4 color;
 in vec2 uv;
-uniform sampler2D tex;
+uniform sampler2D tex1;
+uniform sampler2D tex2;
+uniform float t;
 layout (location=0) out vec4 frag_color;
 
 void main()
 {
-    // ベクトル同士の掛け算は、各成分同士の掛け算(v.x = v1.x * v2.x)
-    frag_color = texture(tex, uv) * color;
+    vec4 c1 = texture(tex1, uv);
+    vec4 c2 = texture(tex2, uv);
+    frag_color = (uv.x < t? c1: c2);
 }
