@@ -15,6 +15,7 @@
 
 // Type Dependencies
 class ShaderProgram;
+class Texture;
 
 // Type Definitions
 class Game
@@ -39,6 +40,8 @@ private:
     GLuint  vao;
     //! Index Buffer Objectのハンドル
     GLuint ibo;
+    //! テクスチャ
+    Texture* pTex;
 };
 
 #endif /* Game_hpp */

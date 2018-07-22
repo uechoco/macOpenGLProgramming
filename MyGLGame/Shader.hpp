@@ -11,6 +11,7 @@
 
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl3.h>
+#include <unordered_map>
 #include <string>
 
 class Shader
@@ -33,11 +34,13 @@ public:
     ~ShaderProgram();
 
     void    Use();
+    void    SetUniform(const std::string& name, int value);
 
 private:
     GLuint  programHandle;
     Shader  *vshader;
     Shader  *fshader;
+    std::unordered_map<std::string, GLint> uniformLocationMap;
 };
 
 

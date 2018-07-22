@@ -75,3 +75,23 @@ void ShaderProgram::Use()
 {
     glUseProgram(programHandle);
 }
+
+void ShaderProgram::SetUniform(const std::string &name, int value)
+{
+    GLint location;
+    const auto itr = uniformLocationMap.find(name);
+    if (itr == uniformLocationMap.end())
+    {
+        location = glGetUniformLocation(programHandle, name.c_str());
+        if (location < 0)
+        {
+            throw GameError("ShaderProgram::SetUniform() Cannot locate a uniform value: %s", name.c_str());
+        }
+        uniformLocationMap.emplace(name, location);
+    }
+    else
+    {
+        location = itr->second;
+    }
+    glUniform1i(location, value);
+}
