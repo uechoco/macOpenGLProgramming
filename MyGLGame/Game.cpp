@@ -12,12 +12,13 @@
 #include "Texture.hpp"
 #include <cmath>
 #include <vector>
+#include <GLKit/GLKMath.h>
 
 struct VertexData
 {
-    GLfloat     pos[3];
-    GLfloat     color[4];
-    GLfloat     uv[2];
+    GLKVector3  pos;
+    GLKVector4  color;
+    GLKVector2  uv;
 };
 
 Game::Game()
@@ -51,9 +52,9 @@ Game::Game()
 
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), ((VertexData*)0)->pos);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), ((VertexData*)0)->color);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), ((VertexData*)0)->uv);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->pos);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->color);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->uv);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
     pTex1 = new Texture("photo.jpg");
