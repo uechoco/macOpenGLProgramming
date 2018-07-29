@@ -17,7 +17,7 @@
 		78B4925B210366C90049A647 /* myshader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 78B4925A210366C90049A647 /* myshader.fsh */; };
 		78B4925E21040D3D0049A647 /* Texture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B4925C21040D3D0049A647 /* Texture.mm */; };
 		78B49260210410990049A647 /* photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78B4925F210410990049A647 /* photo.jpg */; };
-		78B492622104154D0049A647 /* photo2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78B492612104154D0049A647 /* photo2.jpg */; };
+		78F50175210D5A3C0061CA0C /* photo2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78F50174210D5A3B0061CA0C /* photo2.jpg */; };
 		B6B056A520FAF261004C4490 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B056A420FAF261004C4490 /* AppDelegate.m */; };
 		B6B056A820FAF261004C4490 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6B056A720FAF261004C4490 /* ViewController.mm */; };
 		B6B056AA20FAF261004C4490 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6B056A920FAF261004C4490 /* Assets.xcassets */; };
@@ -46,7 +46,7 @@
 		78B4925C21040D3D0049A647 /* Texture.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Texture.mm; sourceTree = "<group>"; };
 		78B4925D21040D3D0049A647 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		78B4925F210410990049A647 /* photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = photo.jpg; path = "../../../../Downloads/MyGLGame_step2-1/MyGLGame/photo.jpg"; sourceTree = "<group>"; };
-		78B492612104154D0049A647 /* photo2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = photo2.jpg; path = "../../../../Downloads/MyGLGame_step2-1/MyGLGame/photo2.jpg"; sourceTree = "<group>"; };
+		78F50174210D5A3B0061CA0C /* photo2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo2.jpg; sourceTree = "<group>"; };
 		B6B056A020FAF261004C4490 /* MyGLGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGLGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B056A320FAF261004C4490 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B6B056A420FAF261004C4490 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				78B4925F210410990049A647 /* photo.jpg */,
-				78B492612104154D0049A647 /* photo2.jpg */,
+				78F50174210D5A3B0061CA0C /* photo2.jpg */,
 				78B49258210366BB0049A647 /* myshader.vsh */,
 				78B4925A210366C90049A647 /* myshader.fsh */,
 			);
@@ -217,7 +217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78B4925B210366C90049A647 /* myshader.fsh in Resources */,
-				78B492622104154D0049A647 /* photo2.jpg in Resources */,
+				78F50175210D5A3C0061CA0C /* photo2.jpg in Resources */,
 				B6B056AA20FAF261004C4490 /* Assets.xcassets in Resources */,
 				78B49260210410990049A647 /* photo.jpg in Resources */,
 				78B49259210366BB0049A647 /* myshader.vsh in Resources */,
