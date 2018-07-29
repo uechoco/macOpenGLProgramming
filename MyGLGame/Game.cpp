@@ -9,7 +9,6 @@
 #include "Game.hpp"
 #include "Shader.hpp"
 #include "Input.hpp"
-#include "Texture.hpp"
 #include <cmath>
 #include <vector>
 #include <GLKit/GLKMath.h>
@@ -18,27 +17,31 @@ struct VertexData
 {
     GLKVector3  pos;
     GLKVector4  color;
-    GLKVector2  uv;
 };
 
 Game::Game()
 {
+    glEnable(GL_DEPTH_TEST);
+
     // シェーダーのコンパイル
     pProgram = new ShaderProgram("myshader.vsh", "myshader.fsh");
 
     std::vector<VertexData> data;
-    data.push_back({ { -0.5f, -0.5f, 0.0f }, { 1.0f, 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f } });
-    data.push_back({ {  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f } });
-    data.push_back({ {  0.5f,  0.5f, 0.0f }, { 0.0f, 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f } });
-    data.push_back({ { -0.5f,  0.5f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 0.0f, 1.0f } });
+    data.push_back({ { -1.0f,  0.0f, 4.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
+    data.push_back({ {  0.2f, -1.0f, 4.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
+    data.push_back({ {  0.2f,  1.0f, 4.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
+
+    data.push_back({ { -0.2f,  0.0f, 2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.0f, -1.0f, 2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.0f,  1.0f, 2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
 
     std::vector<GLushort> indices;
     indices.push_back(0);
     indices.push_back(1);
     indices.push_back(2);
-    indices.push_back(2);
     indices.push_back(3);
-    indices.push_back(0);
+    indices.push_back(4);
+    indices.push_back(5);
 
     // VBOの生成
     glGenBuffers(1, &vbo);
@@ -54,29 +57,14 @@ Game::Game()
     glBindVertexArray(vao);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->pos);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->color);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->uv);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
-    pTex1 = new Texture("photo.jpg");
-    pTex2 = new Texture("photo2.jpg");
-    glActiveTexture(GL_TEXTURE0);
-    pTex1->Bind();
-    glActiveTexture(GL_TEXTURE1);
-    pTex2->Bind();
-    pProgram->Use();
-    pProgram->SetUniform("tex1", 0);
-    pProgram->SetUniform("tex2", 1);
-
-    t = 0.5f;
-
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 Game::~Game()
 {
-    delete pTex2;
-    delete pTex1;
     delete pProgram;
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -90,31 +78,17 @@ Game::~Game()
 
 void Game::Render()
 {
-    if (Input::GetKey(KeyCode::LeftArrow)) {
-        t -= 0.5f * Time::deltaTime;
-    }
-    if (Input::GetKey(KeyCode::RightArrow)) {
-        t += 0.5f * Time::deltaTime;
-    }
-    if (t < 0.0f) {
-        t = 0.0f;
-    } else if (t > 1.0f) {
-        t = 1.0f;
-    }
-
     // レンダリングに使用するシェーダをセット
     pProgram->Use();
-    pProgram->SetUniform("t", t);
 
     // 背景の上書き
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glBindVertexArray(vao);
     // 0番目と1番目の頂点属性を利用することを指定
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
 
     // glDrawArray()関数の第1引数に指定したGL_TRIANGLESで、
     // VBOからストリームされるデータを順番に3個ずつ消費して、

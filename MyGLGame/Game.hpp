@@ -38,10 +38,6 @@ private:
     GLuint  vao;
     //! Index Buffer Objectのハンドル
     GLuint ibo;
-    //! テクスチャ
-    Texture* pTex1;
-    Texture* pTex2;
-    float    t;
 };
 
 #endif /* Game_hpp */
