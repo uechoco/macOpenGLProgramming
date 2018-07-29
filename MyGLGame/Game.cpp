@@ -31,9 +31,9 @@ Game::Game()
     data.push_back({ {  0.2f, -1.0f, 1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
     data.push_back({ {  0.2f,  1.0f, 1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
 
-    data.push_back({ { -0.2f,  0.0f, 0.5f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.0f, -1.0f, 0.5f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f, 0.5f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ { -0.2f,  0.0f, 2.5f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.0f, -1.0f, 2.5f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.0f,  1.0f, 2.5f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
 
     std::vector<GLushort> indices;
     indices.push_back(0);
@@ -58,6 +58,13 @@ Game::Game()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->pos);
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->color);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+
+    GLKMatrix4 mat = GLKMatrix4Make(1.0f, 0.0f, 0.0f, 0.0f,
+                                    0.0f, 1.0f, 0.0f, 0.0f,
+                                    0.0f, 0.0f, 1.0f, 1.0f,
+                                    0.0f, 0.0f, -0.01f, 0.0f);
+    pProgram->Use();
+    pProgram->SetUniform("mat", mat);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

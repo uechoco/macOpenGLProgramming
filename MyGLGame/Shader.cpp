@@ -107,3 +107,27 @@ void ShaderProgram::SetUniform(const std::string& name, float value)
     GLint location = GetUniformLocation(name);
     glUniform1f(location, value);
 }
+
+void ShaderProgram::SetUniform(const std::string& name, const GLKVector2& vec)
+{
+    GLint location = GetUniformLocation(name);
+    glUniform2fv(location, 1, vec.v);
+}
+
+void ShaderProgram::SetUniform(const std::string& name, const GLKVector3& vec)
+{
+    GLint location = GetUniformLocation(name);
+    glUniform3fv(location, 1, vec.v);
+}
+
+void ShaderProgram::SetUniform(const std::string& name, const GLKVector4& vec)
+{
+    GLint location = GetUniformLocation(name);
+    glUniform4fv(location, 1, vec.v);
+}
+
+void ShaderProgram::SetUniform(const std::string& name, const GLKMatrix4& mat)
+{
+    GLint location = GetUniformLocation(name);
+    glUniformMatrix4fv(location, 1, GL_TRUE, mat.m);
+}

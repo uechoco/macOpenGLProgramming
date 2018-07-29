@@ -11,6 +11,7 @@
 
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl3.h>
+#include <GLKit/GLKMath.h>
 #include <unordered_map>
 #include <string>
 
@@ -37,6 +38,10 @@ public:
     GLint   GetUniformLocation(const std::string& name);
     void    SetUniform(const std::string& name, int value);
     void    SetUniform(const std::string& name, float value);
+    void    SetUniform(const std::string& name, const GLKVector2& vec);
+    void    SetUniform(const std::string& name, const GLKVector3& vec);
+    void    SetUniform(const std::string& name, const GLKVector4& vec);
+    void    SetUniform(const std::string& name, const GLKMatrix4& mat);
 
 private:
     GLuint  programHandle;
