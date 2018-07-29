@@ -27,13 +27,13 @@ Game::Game()
     pProgram = new ShaderProgram("myshader.vsh", "myshader.fsh");
 
     std::vector<VertexData> data;
-    data.push_back({ { -0.6f, -0.5f, 1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
-    data.push_back({ {  0.4f, -0.5f, 1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
-    data.push_back({ {  0.4f,  0.5f, 1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
+    data.push_back({ { -0.6f, -0.5f, 5.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
+    data.push_back({ {  0.4f, -0.5f, 5.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
+    data.push_back({ {  0.4f,  0.5f, 5.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
 
-    data.push_back({ {  0.2f, -0.5f, 2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.2f, -0.5f, 2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.2f,  0.5f, 2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  0.2f, -0.5f, 10.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.2f, -0.5f, 10.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.2f,  0.5f, 10.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
 
     std::vector<GLushort> indices;
     indices.push_back(0);
@@ -59,12 +59,15 @@ Game::Game()
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->color);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
+    float aspect = 640.0f / 480.0f;
     float fovy = GLKMathDegreesToRadians(60.0f);
     float cot = 1.0f / tanf(fovy / 2);
-    GLKMatrix4 mat = GLKMatrix4Make(0.75f * cot, 0.0f, 0.0f, 0.0f,
+    float nearZ = 1.0f;
+    float farZ = 50.0f;
+    GLKMatrix4 mat = GLKMatrix4Make((1.0f / aspect) * cot, 0.0f, 0.0f, 0.0f,
                                     0.0f, 1.0f * cot, 0.0f, 0.0f,
-                                    0.0f, 0.0f, 1.0f, 1.0f,
-                                    0.0f, 0.0f, -0.01f, 0.0f);
+                                    0.0f, 0.0f, (farZ + nearZ) / (farZ - nearZ), 1.0f,
+                                    0.0f, 0.0f, -2 * farZ * nearZ / (farZ - nearZ), 0.0f);
     pProgram->Use();
     pProgram->SetUniform("mat", mat);
 
