@@ -27,13 +27,13 @@ Game::Game()
     pProgram = new ShaderProgram("myshader.vsh", "myshader.fsh");
 
     std::vector<VertexData> data;
-    data.push_back({ { -1.0f,  0.0f, 4.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
-    data.push_back({ {  0.2f, -1.0f, 4.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
-    data.push_back({ {  0.2f,  1.0f, 4.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
+    data.push_back({ { -1.0f,  0.0f, 1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
+    data.push_back({ {  0.2f, -1.0f, 1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
+    data.push_back({ {  0.2f,  1.0f, 1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
 
-    data.push_back({ { -0.2f,  0.0f, 2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.0f, -1.0f, 2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f, 2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ { -0.2f,  0.0f, 0.5f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.0f, -1.0f, 0.5f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.0f,  1.0f, 0.5f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
 
     std::vector<GLushort> indices;
     indices.push_back(0);
