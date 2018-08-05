@@ -83,8 +83,7 @@ Game::Game()
     pProgram->Use();
     pProgram->SetUniform("mat", projMat);
 
-    cameraPos = GLKVector3Make(0.0f, 0.0f, 0.0f);
-    cameraAngle = 0.0f;
+    cameraPos = GLKVector3Make(2.0f, 2.0f, 2.0f);
     bCameraDirty = true; // 初回はdirty
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -118,12 +117,11 @@ void Game::Render()
     } else if (Input::GetKey(KeyCode::S)) {
         cameraPos.z += 2.0f * Time::deltaTime;
         bCameraDirty = true;
-    }
-    if (Input::GetKey(KeyCode::LeftArrow)) {
-        cameraAngle += M_PI / 4 * Time::deltaTime;
+    } else if (Input::GetKey(KeyCode::Q)) {
+        cameraPos.y -= 2.0f * Time::deltaTime;
         bCameraDirty = true;
-    } else if (Input::GetKey(KeyCode::RightArrow)) {
-        cameraAngle -= M_PI / 4 * Time::deltaTime;
+    } else if (Input::GetKey(KeyCode::E)) {
+        cameraPos.y += 2.0f * Time::deltaTime;
         bCameraDirty = true;
     }
     // レンダリングに使用するシェーダをセット
@@ -131,16 +129,9 @@ void Game::Render()
 
     if (bCameraDirty)
     {
-        // 実はカメラを移動したり回転させたりすることはできません。
-        // OpenGLでもDirectXでも、カメラの位置と方向は固定されているのです。
-        // そこで、カメラの代わりに、その分だけ頂点データの方を
-        // 回転させたり移動させたりすることで、
-        // 擬似的にカメラを移動・回転したことにします。
-        GLKMatrix4 transMat = GLKMatrix4MakeTranslation(cameraPos.x, cameraPos.y, cameraPos.z);
-        GLKMatrix4 rotMat = GLKMatrix4MakeRotation(cameraAngle, 0.0f, 1.0f, 0.0f);
-
-        GLKMatrix4 viewMat = GLKMatrix4Multiply(transMat, rotMat);
-        viewMat = GLKMatrix4Invert(viewMat, NULL);
+        GLKMatrix4 viewMat = GLKMatrix4MakeLookAt(cameraPos.x, cameraPos.y, cameraPos.z,
+                                              0.0f, 0.0f, 0.0f,
+                                              0.0f, 1.0f, 0.0f);
 
         GLKMatrix4 projMat = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(60.0f), 640.f / 480.f, 0.00001f, 50.f);
         GLKMatrix4 mat = GLKMatrix4Multiply(projMat, viewMat);

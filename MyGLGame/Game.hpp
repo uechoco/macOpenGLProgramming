@@ -50,8 +50,6 @@ private:
 
     //! カメラの位置
     GLKVector3              cameraPos;
-    //! カメラの回転角度
-    float                   cameraAngle;
     //! ビュー行列のdirtyフラグ
     bool bCameraDirty;
 };
