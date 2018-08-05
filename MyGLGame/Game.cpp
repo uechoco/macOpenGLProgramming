@@ -18,44 +18,9 @@ Game::Game()
     // シェーダーのコンパイル
     pProgram = new ShaderProgram("myshader.vsh", "myshader.fsh");
 
-    // キャラクター3体
-    data.push_back({ {  0.2f, -1.0f, -2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.2f, -1.0f, -2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.2f,  0.0f, -2.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-
-    data.push_back({ {  -0.5f, -1.0f, -1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
-    data.push_back({ {  0.7f, -1.0f, -1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
-    data.push_back({ {  0.7f,  0.0f, -1.0f }, { 1.0f, 0.4f, 0.7f, 1.0f } });
-
-    data.push_back({ { -0.5f, -1.0f, 3.0f }, { 0.6f, 0.2f, 1.0f, 1.0f } });
-    data.push_back({ {  0.5f, -1.0f, 3.0f }, { 0.6f, 0.2f, 1.0f, 1.0f } });
-    data.push_back({ {  0.0f,  0.0f, 3.0f }, { 0.6f, 0.2f, 1.0f, 1.0f } });
-
-    // 四隅のコーン
-    data.push_back({ { -2.8f, -1.0f, -5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-    data.push_back({ { -3.2f, -1.0f, -5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-    data.push_back({ { -3.0f,  1.0f, -5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-
-    data.push_back({ { 2.8f, -1.0f, -5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-    data.push_back({ { 3.2f, -1.0f, -5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-    data.push_back({ { 3.0f,  1.0f, -5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-
-    data.push_back({ { -2.8f, -1.0f, 5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-    data.push_back({ { -3.2f, -1.0f, 5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-    data.push_back({ { -3.0f,  1.0f, 5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-
-    data.push_back({ { 2.8f, -1.0f, 5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-    data.push_back({ { 3.2f, -1.0f, 5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-    data.push_back({ { 3.0f,  1.0f, 5.0f }, { 0.0f, 1.0f, 0.2f, 1.0f } });
-
-    // 地面
-    data.push_back({ {  3.0f, -1.0f,  5.0f }, { 0.0f, 0.0f, 0.7f, 1.0f } });
-    data.push_back({ {  3.0f, -1.0f, -5.0f }, { 0.0f, 0.0f, 0.7f, 1.0f } });
-    data.push_back({ { -3.0f, -1.0f, -5.0f }, { 0.0f, 0.0f, 0.7f, 1.0f } });
-
-    data.push_back({ {  3.0f, -1.0f,  5.0f }, { 0.0f, 0.0f, 0.7f, 1.0f } });
-    data.push_back({ { -3.0f, -1.0f,  5.0f }, { 0.0f, 0.0f, 0.7f, 1.0f } });
-    data.push_back({ { -3.0f, -1.0f, -5.0f }, { 0.0f, 0.0f, 0.7f, 1.0f } });
+    data.push_back({ {  -1.0f, -1.0f, 0.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {   1.0f, -1.0f, 0.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {   0.0f,  1.0f, 0.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
 
     std::vector<GLushort> indices;
     indices.reserve(data.size());
@@ -79,11 +44,7 @@ Game::Game()
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->color);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
-    GLKMatrix4 projMat = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(60.0f), 640.f / 480.f, 0.00001f, 50.f);
-    pProgram->Use();
-    pProgram->SetUniform("mat", projMat);
-
-    cameraPos = GLKVector3Make(2.0f, 2.0f, 2.0f);
+    cameraPos = GLKVector3Make(0.0f, 2.0f, 5.5f);
     bCameraDirty = true; // 初回はdirty
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -134,9 +95,8 @@ void Game::Render()
                                               0.0f, 1.0f, 0.0f);
 
         GLKMatrix4 projMat = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(60.0f), 640.f / 480.f, 0.00001f, 50.f);
-        GLKMatrix4 mat = GLKMatrix4Multiply(projMat, viewMat);
+        projViewMat = GLKMatrix4Multiply(projMat, viewMat);
 
-        pProgram->SetUniform("mat", mat);
         bCameraDirty = false;
     }
 
@@ -145,17 +105,23 @@ void Game::Render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glBindVertexArray(vao);
-    // 0番目と1番目の頂点属性を利用することを指定
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
-
-    // glDrawArray()関数の第1引数に指定したGL_TRIANGLESで、
-    // VBOからストリームされるデータを順番に3個ずつ消費して、
-    // 三角形を描画していくことを指定します。
-    //glDrawArrays(GL_TRIANGLES, 0, 3);
-
-    // IBOから描画する場合は、第1引数は glDrawArraysと変わらないが、
-    // 第2引数・第3引数はインデックスリストの個数とサイズを指定する
-    // 第4引数は0をポインタとして渡します。
-    glDrawElements(GL_TRIANGLES, (GLsizei)data.size(), GL_UNSIGNED_SHORT, (void *)0);
+    // for文を使って変数iで0から7までカウントし、
+    // 360°/8 = π/4ラジアンずつ角度をずらしながら、
+    // コサインとサインでX座標とZ座標を計算していきます。
+    // 三角形の1辺の長さが2ですので、八角形に内接する円の半径は
+    // およそ2.414になります（1 / tan(45°/2)を計算すると出てきます）。
+    // コサインとサインの値にこの半径を掛けて、各モデルの位置を計算します。
+    for (int i = 0; i < 8; i++) {
+        float x = cosf(M_PI / 4 * i) * 2.414f;
+        float z = -sinf(M_PI / 4 * i) * 2.414f;
+        // モデル行列(TRS行列(の計算
+        GLKMatrix4 modelMat = GLKMatrix4Identity;
+        modelMat = GLKMatrix4Translate(modelMat, x, 0.0f, z);
+        modelMat = GLKMatrix4RotateY(modelMat, M_PI / 4 * i + M_PI / 2);
+        GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
+        pProgram->SetUniform("mat", pvmMat);
+        glDrawElements(GL_TRIANGLES, (GLsizei)data.size(), GL_UNSIGNED_SHORT, (void *)0);
+    }
 }

@@ -50,6 +50,8 @@ private:
 
     //! カメラの位置
     GLKVector3              cameraPos;
+    //! PV行列
+    GLKMatrix4              projViewMat;
     //! ビュー行列のdirtyフラグ
     bool bCameraDirty;
 };
