@@ -54,6 +54,8 @@ private:
     GLKMatrix4              projViewMat;
     //! ビュー行列のdirtyフラグ
     bool bCameraDirty;
+    //! perspective(透視投影) or orthographic(正射影)
+    bool bPerspective;
 };
 
 #endif /* Game_hpp */
