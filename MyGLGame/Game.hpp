@@ -9,9 +9,11 @@
 #ifndef Game_hpp
 #define Game_hpp
 
+#include "Time.hpp"
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl3.h>
-#include "Time.hpp"
+#include <GLKit/GLKMath.h>
+#include <vector>
 
 // Type Dependencies
 class ShaderProgram;
@@ -30,14 +32,28 @@ public:
     void Render();
 
 private:
+    struct VertexData
+    {
+        GLKVector3  pos;
+        GLKVector4  color;
+    };
     //! シェーダープログラム
     ShaderProgram* pProgram;
+    //! 描画データ
+    std::vector<VertexData> data;
     //! Vertex Buffer Objectのハンドル
     GLuint  vbo;
     //! Vertex Array Objectのハンドル
     GLuint  vao;
     //! Index Buffer Objectのハンドル
     GLuint ibo;
+
+    //! カメラの位置
+    GLKVector3              cameraPos;
+    //! カメラの回転角度
+    float                   cameraAngle;
+    //! ビュー行列のdirtyフラグ
+    bool bCameraDirty;
 };
 
 #endif /* Game_hpp */
