@@ -6,6 +6,7 @@ layout (location=2) in vec4 vertex_color;
 uniform vec3 light_dir;
 uniform mat4 pvm_mat;
 uniform mat4 model_mat;
+uniform vec4 diffuse_color;
 out vec4 color;
 
 void main()
@@ -14,5 +15,5 @@ void main()
 
     vec3 normal = normalize((vec4(vertex_normal, 0.0) * model_mat).xyz);
     float power = clamp(dot(normal, -normalize(light_dir)), 0.0, 1.0);
-    color = vertex_color * power;
+    color = vertex_color * diffuse_color * power;
 }

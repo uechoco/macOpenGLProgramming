@@ -166,5 +166,7 @@ void Game::Render()
     pProgram->SetUniform("model_mat", modelMat);
     GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
     pProgram->SetUniform("pvm_mat", pvmMat);
+
+    pProgram->SetUniform("diffuse_color", GLKVector4Make(1.0f, 0.9f, 0.7f, 1.0f));
     glDrawElements(GL_TRIANGLES, (GLsizei)data.size(), GL_UNSIGNED_SHORT, (void *)0);
 }
