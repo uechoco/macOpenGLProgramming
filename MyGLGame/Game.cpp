@@ -88,7 +88,7 @@ Game::Game()
     glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->color);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
-    cameraPos = GLKVector3Make(0.1f, 0.1f, 0.3f);
+    cameraPos = GLKVector3Make(0.0f, 0.0f, 5.0f);
     bCameraDirty = true; // 初回はdirty
     bPerspective = true; // 最初は透視投影
 
@@ -111,6 +111,7 @@ Game::~Game()
 
 void Game::Render()
 {
+    /*
     if (Input::GetKey(KeyCode::A)) {
         cameraPos.x -= 2.0f * Time::deltaTime;
         bCameraDirty = true;
@@ -133,13 +134,22 @@ void Game::Render()
         bPerspective = !bPerspective;
         bCameraDirty = true;
     }
+     */
+
+    cameraPos.x = -cosf(Time::time * 0.6f) * 5.0f;
+    cameraPos.z = sinf(Time::time * 0.6f) * 5.0f;
+    bCameraDirty = true;
     // レンダリングに使用するシェーダをセット
     pProgram->Use();
 
+    GLKVector3 lightDir = GLKVector3Make(1.0f, -1.0f, -2.0f);
+    pProgram->SetUniform("light_dir", lightDir);
+
+    GLKVector3 cameraTarget = GLKVector3Make(0.0f, 0.0f, 0.0f);
     if (bCameraDirty)
     {
         GLKMatrix4 viewMat = GLKMatrix4MakeLookAt(cameraPos.x, cameraPos.y, cameraPos.z,
-                                              0.0f, 0.0f, 0.0f,
+                                              cameraTarget.x, cameraTarget.y, cameraTarget.z,
                                               0.0f, 1.0f, 0.0f);
 
         GLKMatrix4 projMat = bPerspective
@@ -149,9 +159,10 @@ void Game::Render()
 
         bCameraDirty = false;
     }
+    GLKVector3 eyeDir = GLKVector3Subtract(cameraTarget, cameraPos);
+    eyeDir = GLKVector3Normalize(eyeDir);
+    pProgram->SetUniform("eye_dir", eyeDir);
 
-    GLKVector3 lightDir = GLKVector3Make(1.0f, -1.0f, -2.0f);
-    pProgram->SetUniform("light_dir", lightDir);
 
     // 背景の上書き
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -163,11 +174,15 @@ void Game::Render()
     glEnableVertexAttribArray(2);
 
     GLKMatrix4 modelMat = GLKMatrix4Identity;
+    modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
+    modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
     pProgram->SetUniform("model_mat", modelMat);
     GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
     pProgram->SetUniform("pvm_mat", pvmMat);
 
     pProgram->SetUniform("diffuse_color", GLKVector4Make(1.0f, 0.9f, 0.7f, 1.0f));
     pProgram->SetUniform("ambient_color", GLKVector4Make(0.2f, 0.0f, 0.0f, 1.0f));
+    pProgram->SetUniform("specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
+    pProgram->SetUniform("specular_shininess", 10.0f);
     glDrawElements(GL_TRIANGLES, (GLsizei)data.size(), GL_UNSIGNED_SHORT, (void *)0);
 }
