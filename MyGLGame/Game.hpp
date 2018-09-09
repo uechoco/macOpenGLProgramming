@@ -35,6 +35,7 @@ private:
     struct VertexData
     {
         GLKVector3  pos;
+        GLKVector3  normal;
         GLKVector4  color;
     };
     //! シェーダープログラム

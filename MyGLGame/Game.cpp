@@ -9,6 +9,8 @@
 #include "Game.hpp"
 #include "Shader.hpp"
 #include "Input.hpp"
+#include "StringSupport.hpp"
+#include <fstream>
 #include <cmath>
 
 Game::Game()
@@ -18,53 +20,50 @@ Game::Game()
     // シェーダーのコンパイル
     pProgram = new ShaderProgram("myshader.vsh", "myshader.fsh");
 
-    // 手前の面
-    data.push_back({ { -1.0f, -1.0f,  1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.0f, -1.0f,  1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f,  1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f,  1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ { -1.0f,  1.0f,  1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ { -1.0f, -1.0f,  1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-
-    // 奥の面
-    data.push_back({ { -1.0f, -1.0f, -1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.0f, -1.0f, -1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f, -1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f, -1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ { -1.0f,  1.0f, -1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-    data.push_back({ { -1.0f, -1.0f, -1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
-
-    // 上の面
-    data.push_back({ { -1.0f,  1.0f, -1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f, -1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f,  1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f,  1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-    data.push_back({ { -1.0f,  1.0f,  1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-    data.push_back({ { -1.0f,  1.0f, -1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-
-    // 下の面
-    data.push_back({ { -1.0f, -1.0f, -1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-    data.push_back({ {  1.0f, -1.0f, -1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-    data.push_back({ {  1.0f, -1.0f,  1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-    data.push_back({ {  1.0f, -1.0f,  1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-    data.push_back({ { -1.0f, -1.0f,  1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-    data.push_back({ { -1.0f, -1.0f, -1.0f }, { 1.0f, 0.0f, 0.75f, 1.0f } });
-
-    // 左の面
-    data.push_back({ { -1.0f, -1.0f, -1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-    data.push_back({ { -1.0f, -1.0f,  1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-    data.push_back({ { -1.0f,  1.0f,  1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-    data.push_back({ { -1.0f,  1.0f,  1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-    data.push_back({ { -1.0f,  1.0f, -1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-    data.push_back({ { -1.0f, -1.0f, -1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-
-    // 右の面
-    data.push_back({ {  1.0f, -1.0f, -1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-    data.push_back({ {  1.0f, -1.0f,  1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f,  1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f,  1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-    data.push_back({ {  1.0f,  1.0f, -1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
-    data.push_back({ {  1.0f, -1.0f, -1.0f }, { 1.0f, 0.75f, 0.0f, 1.0f } });
+    // 3Dモデルの読み込み
+    std::vector<GLKVector3> vertices;
+    std::string modelFilepath = GetFilepath("bunny.obj");
+    std::ifstream ifs(modelFilepath);
+    std::string line;
+    int lineCount = 0;
+    while (ifs && getline(ifs, line)) {
+        lineCount++;
+        if (line.length() > 0 && line[0] == '#') {
+            continue;
+        }
+        std::vector<std::string> parts = Split(line, " ");
+        if (parts.size() > 0) {
+            if (parts[0] == "v") {
+                if (parts.size() < 4) {
+                    throw GameError("Invalid obj file format (v): [line=%d] %s", lineCount, line.c_str());
+                }
+                float x = atof(parts[1].c_str());
+                float y = atof(parts[2].c_str());
+                float z = atof(parts[3].c_str());
+                vertices.push_back(GLKVector3Make(x, y, z));
+            } else if (parts[0] == "f") {
+                if (parts.size() < 4) {
+                    throw GameError("Invalid obj file format (f): [line=%d] %s", lineCount, line.c_str());
+                }
+                int index0 = atoi(parts[1].c_str()) - 1;
+                int index1 = atoi(parts[2].c_str()) - 1;
+                int index2 = atoi(parts[3].c_str()) - 1;
+                if (index0 >= vertices.size() || index1 >= vertices.size() || index2 >= vertices.size()) {
+                    throw GameError("Invalid index value (f): [line=%d] %s", lineCount, line.c_str());
+                }
+                GLKVector3& v0 = vertices[index0];
+                GLKVector3& v1 = vertices[index1];
+                GLKVector3& v2 = vertices[index2];
+                GLKVector3 cross = GLKVector3CrossProduct(GLKVector3Subtract(v1, v0),
+                                                          GLKVector3Subtract(v2, v0));
+                GLKVector3 normal = GLKVector3Normalize(cross);
+                GLKVector4 color = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
+                data.push_back( VertexData{ v0, normal, color } );
+                data.push_back( VertexData{ v1, normal, color } );
+                data.push_back( VertexData{ v2, normal, color } );
+            }
+        }
+    }
 
     std::vector<GLushort> indices;
     indices.reserve(data.size());
@@ -85,10 +84,11 @@ Game::Game()
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->pos);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->color);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData *)0)->normal);
+    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData*)0)->color);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
-    cameraPos = GLKVector3Make(2.5f, 2.0f, 5.0f);
+    cameraPos = GLKVector3Make(0.1f, 0.1f, 0.3f);
     bCameraDirty = true; // 初回はdirty
     bPerspective = true; // 最初は透視投影
 
@@ -150,6 +150,9 @@ void Game::Render()
         bCameraDirty = false;
     }
 
+    GLKVector3 lightDir = GLKVector3Make(1.0f, -1.0f, -2.0f);
+    pProgram->SetUniform("light_dir", lightDir);
+
     // 背景の上書き
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -157,21 +160,11 @@ void Game::Render()
     glBindVertexArray(vao);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     GLKMatrix4 modelMat = GLKMatrix4Identity;
+    pProgram->SetUniform("model_mat", modelMat);
     GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
-    pProgram->SetUniform("mat", pvmMat);
-    glDrawElements(GL_TRIANGLES, (GLsizei)data.size(), GL_UNSIGNED_SHORT, (void *)0);
-
-    modelMat = GLKMatrix4Identity;
-    modelMat = GLKMatrix4Translate(modelMat, 2.0f, 0.0f, -2.0f);
-    pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
-    pProgram->SetUniform("mat", pvmMat);
-    glDrawElements(GL_TRIANGLES, (GLsizei)data.size(), GL_UNSIGNED_SHORT, (void *)0);
-
-    modelMat = GLKMatrix4Identity;
-    modelMat = GLKMatrix4Translate(modelMat, -2.0f, 0.0f, -2.0f);
-    pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
-    pProgram->SetUniform("mat", pvmMat);
+    pProgram->SetUniform("pvm_mat", pvmMat);
     glDrawElements(GL_TRIANGLES, (GLsizei)data.size(), GL_UNSIGNED_SHORT, (void *)0);
 }

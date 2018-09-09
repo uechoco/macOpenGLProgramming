@@ -57,3 +57,87 @@ std::string ReadTextFile(const std::string& filename)
 
     return ret;
 }
+
+
+std::vector<std::string> Split(const std::string& str, const std::string& separator, bool ignoreEmptyString/* = false*/)
+{
+    std::vector<std::string> ret;
+
+    std::string::size_type pos = 0;
+    std::string::size_type length = str.length();
+    if (length == 0) {
+        if (!ignoreEmptyString) {
+            ret.push_back("");
+        }
+        return ret;
+    }
+
+    while (pos < length) {
+        std::string::size_type p = str.find_first_of(separator, pos);
+        if (p == std::string::npos) {
+            std::string::size_type len = length - pos;
+            if (!ignoreEmptyString || len > 0) {
+                std::string part = str.substr(pos, len);
+                ret.push_back(part);
+            }
+            break;
+        }
+        std::string::size_type len = p - pos;
+        if (!ignoreEmptyString || len > 0) {
+            std::string part = str.substr(pos, len);
+            ret.push_back(part);
+        }
+        pos = p + 1;
+        if (pos >= length && !ignoreEmptyString) {
+            ret.push_back("");
+        }
+    }
+    return ret;
+}
+
+bool StartsWith(const std::string& str, const std::string& value, bool ignoreCase/* = true*/)
+{
+    auto length = value.size();
+    if (str.length() < length) {
+        return false;
+    }
+
+    std::string sub = str.substr(0, length);
+    if (ignoreCase) {
+        return (strncasecmp(sub.c_str(), value.c_str(), length) == 0);
+    } else {
+        return (sub == value);
+    }
+}
+
+bool EndsWith(const std::string& str, const std::string& value, bool ignoreCase/* = true*/)
+{
+    auto length = value.size();
+    if (str.length() < length) {
+        return false;
+    }
+
+    std::string sub = str.substr(str.length()-length, length);
+    if (ignoreCase) {
+        return (strncasecmp(sub.c_str(), value.c_str(), length) == 0);
+    } else {
+        return (sub == value);
+    }
+}
+
+std::string Trim(const std::string& str)
+{
+    return Trim(str, "\t\r\n ");
+}
+
+std::string Trim(const std::string& str, const std::string& trimChars)
+{
+    std::string::size_type left = str.find_first_not_of(trimChars);
+
+    if (left == std::string::npos) {
+        return str;
+    }
+    std::string::size_type right = str.find_last_not_of(trimChars);
+    return str.substr(left, right - left + 1);
+}
+
