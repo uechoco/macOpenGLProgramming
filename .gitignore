@@ -135,6 +135,7 @@ iOSInjectionProject/
 *.lo
 *.o
 *.obj
+!MyGLGame/*.obj
 
 # Precompiled Headers
 *.gch
