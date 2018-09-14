@@ -29,6 +29,8 @@
 		B6B056BB20FAF2B5004C4490 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6B056BA20FAF2B5004C4490 /* OpenGL.framework */; };
 		B6B056BE20FAF2E2004C4490 /* MyGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6B056BD20FAF2E2004C4490 /* MyGLView.mm */; };
 		B6B056C120FAF69B004C4490 /* WindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B056C020FAF69B004C4490 /* WindowController.m */; };
+		B6DBCC24214B4582005A2EAB /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6DBCC23214B4582005A2EAB /* ModelIO.framework */; };
+		B6DBCC27214B45A1005A2EAB /* Mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6DBCC25214B45A1005A2EAB /* Mesh.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +69,9 @@
 		B6B056BD20FAF2E2004C4490 /* MyGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MyGLView.mm; sourceTree = "<group>"; };
 		B6B056BF20FAF69B004C4490 /* WindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WindowController.h; sourceTree = "<group>"; };
 		B6B056C020FAF69B004C4490 /* WindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WindowController.m; sourceTree = "<group>"; };
+		B6DBCC23214B4582005A2EAB /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
+		B6DBCC25214B45A1005A2EAB /* Mesh.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Mesh.mm; sourceTree = "<group>"; };
+		B6DBCC26214B45A1005A2EAB /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6DBCC24214B4582005A2EAB /* ModelIO.framework in Frameworks */,
 				78B4924520FB07620049A647 /* CoreVideo.framework in Frameworks */,
 				B6B056BB20FAF2B5004C4490 /* OpenGL.framework in Frameworks */,
 				B6B056B920FAF2A4004C4490 /* GLKit.framework in Frameworks */,
@@ -97,6 +103,8 @@
 				B6B056BD20FAF2E2004C4490 /* MyGLView.mm */,
 				78B4924A20FB8D780049A647 /* StringSupport.hpp */,
 				78B4924920FB8D780049A647 /* StringSupport.mm */,
+				B6DBCC25214B45A1005A2EAB /* Mesh.mm */,
+				B6DBCC26214B45A1005A2EAB /* Mesh.hpp */,
 				78B49255210364D00049A647 /* Shader.cpp */,
 				78B49256210364D00049A647 /* Shader.hpp */,
 				78B4925C21040D3D0049A647 /* Texture.mm */,
@@ -157,6 +165,7 @@
 		B6B056B720FAF2A3004C4490 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B6DBCC23214B4582005A2EAB /* ModelIO.framework */,
 				78B4924420FB07620049A647 /* CoreVideo.framework */,
 				B6B056BA20FAF2B5004C4490 /* OpenGL.framework */,
 				B6B056B820FAF2A4004C4490 /* GLKit.framework */,
@@ -246,6 +255,7 @@
 				78B4924B20FB8D780049A647 /* StringSupport.mm in Sources */,
 				78B49257210364D00049A647 /* Shader.cpp in Sources */,
 				B6B056BE20FAF2E2004C4490 /* MyGLView.mm in Sources */,
+				B6DBCC27214B45A1005A2EAB /* Mesh.mm in Sources */,
 				78B4924820FB8BE70049A647 /* Game.cpp in Sources */,
 				78B4925420FCCC720049A647 /* Input.mm in Sources */,
 				B6B056B020FAF261004C4490 /* main.m in Sources */,

@@ -10,6 +10,7 @@
 #define Game_hpp
 
 #include "Time.hpp"
+#include "Mesh.hpp"
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl3.h>
 #include <GLKit/GLKMath.h>
@@ -32,22 +33,10 @@ public:
     void Render();
 
 private:
-    struct VertexData
-    {
-        GLKVector3  pos;
-        GLKVector3  normal;
-        GLKVector4  color;
-    };
     //! シェーダープログラム
-    ShaderProgram* pProgram;
-    //! 描画データ
-    std::vector<VertexData> data;
-    //! Vertex Buffer Objectのハンドル
-    GLuint  vbo;
-    //! Vertex Array Objectのハンドル
-    GLuint  vao;
-    //! Index Buffer Objectのハンドル
-    GLuint ibo;
+    ShaderProgram* pProgram = nullptr;
+    //! メッシュ
+    Mesh*          pMesh = nullptr;
 
     //! カメラの位置
     GLKVector3              cameraPos;
