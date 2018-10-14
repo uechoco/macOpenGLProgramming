@@ -34,10 +34,10 @@ public:
 
 private:
     //! シェーダープログラム
-    ShaderProgram* pProgram = nullptr;
+    ShaderProgram* program = nullptr;
     //! メッシュ
-    Mesh*          pMesh = nullptr;
-    Mesh*          pPlaneMesh = nullptr;
+    Mesh*          mesh = nullptr;
+    Mesh*          planeMesh = nullptr;
 
     //! カメラの位置
     GLKVector3              cameraPos;

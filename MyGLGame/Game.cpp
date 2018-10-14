@@ -18,10 +18,10 @@ Game::Game()
     glEnable(GL_DEPTH_TEST);
 
     // シェーダーのコンパイル
-    pProgram = new ShaderProgram("myshader.vsh", "myshader.fsh");
+    program = new ShaderProgram("myshader.vsh", "myshader.fsh");
 
-    pMesh = new Mesh("bunny.obj");
-    pPlaneMesh = new Mesh("plane.obj");
+    mesh = new Mesh("bunny.obj");
+    planeMesh = new Mesh("plane.obj");
 
     cameraPos = GLKVector3Make(0.0f, 0.0f, 5.0f);
     bCameraDirty = true; // 初回はdirty
@@ -33,9 +33,9 @@ Game::Game()
 
 Game::~Game()
 {
-    delete pProgram;
-    delete pPlaneMesh;
-    delete pMesh;
+    delete program;
+    delete planeMesh;
+    delete mesh;
 }
 
 void Game::Render()
@@ -69,11 +69,11 @@ void Game::Render()
     cameraPos.z = sinf(Time::time * 0.6f) * 5.0f;
     bCameraDirty = true;
     // レンダリングに使用するシェーダをセット
-    pProgram->Use();
+    program->Use();
 
     GLKVector3 lightPos = GLKVector3Make(-1.f, -1.f, 2.0f);
-    pProgram->SetUniform("light_pos", lightPos);
-    pProgram->SetUniform("light_attenuation", 0.9f);
+    program->SetUniform("light_pos", lightPos);
+    program->SetUniform("light_attenuation", 0.9f);
 
     GLKVector3 cameraTarget = GLKVector3Make(0.0f, 0.0f, 0.0f);
     if (bCameraDirty)
@@ -91,7 +91,7 @@ void Game::Render()
     }
     GLKVector3 eyeDir = GLKVector3Subtract(cameraTarget, cameraPos);
     eyeDir = GLKVector3Normalize(eyeDir);
-    pProgram->SetUniform("eye_dir", eyeDir);
+    program->SetUniform("eye_dir", eyeDir);
 
 
     // 背景の上書き
@@ -102,15 +102,15 @@ void Game::Render()
     GLKMatrix4 modelMat = GLKMatrix4Identity;
     modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
     modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
-    pProgram->SetUniform("model_mat", modelMat);
+    program->SetUniform("model_mat", modelMat);
     GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
-    pProgram->SetUniform("pvm_mat", pvmMat);
+    program->SetUniform("pvm_mat", pvmMat);
 
-    pProgram->SetUniform("diffuse_color", GLKVector4Make(1.0f, 0.9f, 0.7f, 1.0f));
-    pProgram->SetUniform("ambient_color", GLKVector4Make(0.2f, 0.0f, 0.0f, 1.0f));
-    pProgram->SetUniform("specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
-    pProgram->SetUniform("specular_shininess", 50.0f);
+    program->SetUniform("diffuse_color", GLKVector4Make(1.0f, 0.9f, 0.7f, 1.0f));
+    program->SetUniform("ambient_color", GLKVector4Make(0.2f, 0.0f, 0.0f, 1.0f));
+    program->SetUniform("specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
+    program->SetUniform("specular_shininess", 50.0f);
 
-    pMesh->Draw();
-    pPlaneMesh->Draw();
+    mesh->Draw();
+    planeMesh->Draw();
 }
