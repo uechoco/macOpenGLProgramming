@@ -37,6 +37,7 @@ private:
     ShaderProgram* pProgram = nullptr;
     //! メッシュ
     Mesh*          pMesh = nullptr;
+    Mesh*          pPlaneMesh = nullptr;
 
     //! カメラの位置
     GLKVector3              cameraPos;

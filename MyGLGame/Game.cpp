@@ -19,8 +19,9 @@ Game::Game()
 
     // シェーダーのコンパイル
     pProgram = new ShaderProgram("myshader.vsh", "myshader.fsh");
-    
+
     pMesh = new Mesh("bunny.obj");
+    pPlaneMesh = new Mesh("plane.obj");
 
     cameraPos = GLKVector3Make(0.0f, 0.0f, 5.0f);
     bCameraDirty = true; // 初回はdirty
@@ -33,6 +34,7 @@ Game::Game()
 Game::~Game()
 {
     delete pProgram;
+    delete pPlaneMesh;
     delete pMesh;
 }
 
@@ -61,7 +63,7 @@ void Game::Render()
         bPerspective = !bPerspective;
         bCameraDirty = true;
     }
-     */
+    */
 
     cameraPos.x = -cosf(Time::time * 0.6f) * 5.0f;
     cameraPos.z = sinf(Time::time * 0.6f) * 5.0f;
@@ -69,8 +71,9 @@ void Game::Render()
     // レンダリングに使用するシェーダをセット
     pProgram->Use();
 
-    GLKVector3 lightDir = GLKVector3Make(1.0f, -1.0f, -2.0f);
-    pProgram->SetUniform("light_dir", lightDir);
+    GLKVector3 lightPos = GLKVector3Make(-1.f, -1.f, 2.0f);
+    pProgram->SetUniform("light_pos", lightPos);
+    pProgram->SetUniform("light_attenuation", 0.9f);
 
     GLKVector3 cameraTarget = GLKVector3Make(0.0f, 0.0f, 0.0f);
     if (bCameraDirty)
@@ -95,6 +98,7 @@ void Game::Render()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    
     GLKMatrix4 modelMat = GLKMatrix4Identity;
     modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
     modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
@@ -105,7 +109,8 @@ void Game::Render()
     pProgram->SetUniform("diffuse_color", GLKVector4Make(1.0f, 0.9f, 0.7f, 1.0f));
     pProgram->SetUniform("ambient_color", GLKVector4Make(0.2f, 0.0f, 0.0f, 1.0f));
     pProgram->SetUniform("specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
-    pProgram->SetUniform("specular_shininess", 10.0f);
-    
+    pProgram->SetUniform("specular_shininess", 50.0f);
+
     pMesh->Draw();
+    pPlaneMesh->Draw();
 }

@@ -17,6 +17,7 @@
 		78B49259210366BB0049A647 /* myshader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 78B49258210366BB0049A647 /* myshader.vsh */; };
 		78B4925B210366C90049A647 /* myshader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 78B4925A210366C90049A647 /* myshader.fsh */; };
 		78B4925E21040D3D0049A647 /* Texture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B4925C21040D3D0049A647 /* Texture.mm */; };
+		78EBF98D21733345008ACA73 /* plane.obj in Resources */ = {isa = PBXBuildFile; fileRef = 78EBF98C21733345008ACA73 /* plane.obj */; };
 		78F50175210D5A3C0061CA0C /* photo2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78F50174210D5A3B0061CA0C /* photo2.jpg */; };
 		B61BF8FA2145F6C0008B00E4 /* bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = B61BF8F92145F6C0008B00E4 /* bunny.obj */; };
 		B61BF8FC2145F6ED008B00E4 /* teapot.obj in Resources */ = {isa = PBXBuildFile; fileRef = B61BF8FB2145F6ED008B00E4 /* teapot.obj */; };
@@ -50,6 +51,7 @@
 		78B4925A210366C90049A647 /* myshader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = myshader.fsh; sourceTree = "<group>"; };
 		78B4925C21040D3D0049A647 /* Texture.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Texture.mm; sourceTree = "<group>"; };
 		78B4925D21040D3D0049A647 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
+		78EBF98C21733345008ACA73 /* plane.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plane.obj; sourceTree = "<group>"; };
 		78F50174210D5A3B0061CA0C /* photo2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo2.jpg; sourceTree = "<group>"; };
 		B61BF8F92145F6C0008B00E4 /* bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny.obj; sourceTree = "<group>"; };
 		B61BF8FB2145F6ED008B00E4 /* teapot.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teapot.obj; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				78F50174210D5A3B0061CA0C /* photo2.jpg */,
 				B61BF8F92145F6C0008B00E4 /* bunny.obj */,
 				B61BF8FB2145F6ED008B00E4 /* teapot.obj */,
+				78EBF98C21733345008ACA73 /* plane.obj */,
 				78B49258210366BB0049A647 /* myshader.vsh */,
 				78B4925A210366C90049A647 /* myshader.fsh */,
 			);
@@ -236,6 +239,7 @@
 				78B4925B210366C90049A647 /* myshader.fsh in Resources */,
 				78F50175210D5A3C0061CA0C /* photo2.jpg in Resources */,
 				B6B056AA20FAF261004C4490 /* Assets.xcassets in Resources */,
+				78EBF98D21733345008ACA73 /* plane.obj in Resources */,
 				78B49259210366BB0049A647 /* myshader.vsh in Resources */,
 				B6B056AD20FAF261004C4490 /* Main.storyboard in Resources */,
 				B61BF8FC2145F6ED008B00E4 /* teapot.obj in Resources */,
