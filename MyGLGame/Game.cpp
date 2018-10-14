@@ -71,9 +71,14 @@ void Game::Render()
     // レンダリングに使用するシェーダをセット
     program->Use();
 
-    GLKVector3 lightPos = GLKVector3Make(-1.f, -1.f, 2.0f);
+    GLKVector3 lightPos = GLKVector3Make(-1.f, 1.f, 2.0f);
+    GLKVector3 spotDir = GLKVector3Make(0.25f, -1.f, -0.25f);
     program->SetUniform("light_pos", lightPos);
-    program->SetUniform("light_attenuation", 0.9f);
+    program->SetUniform("light_attenuation", 0.1f);
+    program->SetUniform("spot_dir", spotDir);
+    program->SetUniform("spot_phi", GLKMathDegreesToRadians(45.f));
+    program->SetUniform("spot_theta", GLKMathDegreesToRadians(30.f));
+    program->SetUniform("spot_falloff", 1.f);
 
     GLKVector3 cameraTarget = GLKVector3Make(0.0f, 0.0f, 0.0f);
     if (bCameraDirty)
