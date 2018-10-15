@@ -116,6 +116,9 @@ void Game::Render()
     program->SetUniform("specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
     program->SetUniform("specular_shininess", 50.0f);
 
+    program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.4f, 0.f));
     mesh->Draw();
+
+    program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.0f, 0.f));
     planeMesh->Draw();
 }

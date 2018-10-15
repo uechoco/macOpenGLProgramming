@@ -16,6 +16,7 @@ uniform vec4 diffuse_color;
 uniform vec4 ambient_color;
 uniform vec4 specular_color;
 uniform float specular_shininess;
+uniform vec4 emissive_color;
 out vec4 color;
 
 void main()
@@ -35,7 +36,7 @@ void main()
     {
         // out-range
         // attenuation * 0.f;
-        color = ambient_color;
+        color = ambient_color + emissive_color;
         return;
     }
     else
@@ -56,6 +57,6 @@ void main()
         vec3 eye = -normalize(eye_dir);
         vec3 half_vec = normalize(light + eye);
         float specular = pow(clamp(dot(normal, half_vec), 0.0, 1.0), specular_shininess);
-        color = vertex_color * diffuse_color * diffuse_power * attenuation + ambient_color + specular_color * specular;
+        color = vertex_color * diffuse_color * diffuse_power * attenuation + ambient_color + specular_color * specular + emissive_color;
     }
 }
