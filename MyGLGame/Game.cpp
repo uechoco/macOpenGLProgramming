@@ -71,15 +71,6 @@ void Game::Render()
     // レンダリングに使用するシェーダをセット
     program->Use();
 
-    GLKVector3 lightPos = GLKVector3Make(-1.f, 1.f, 2.0f);
-    GLKVector3 spotDir = GLKVector3Make(0.25f, -1.f, -0.25f);
-    program->SetUniform("light_pos", lightPos);
-    program->SetUniform("light_attenuation", 0.1f);
-    program->SetUniform("spot_dir", spotDir);
-    program->SetUniform("spot_phi", GLKMathDegreesToRadians(45.f));
-    program->SetUniform("spot_theta", GLKMathDegreesToRadians(30.f));
-    program->SetUniform("spot_falloff", 1.f);
-
     GLKVector3 cameraTarget = GLKVector3Make(0.0f, 0.0f, 0.0f);
     if (bCameraDirty)
     {
@@ -103,18 +94,63 @@ void Game::Render()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    
+    {
+        // ライト1
+        GLKVector3 lightPos = GLKVector3Make(-1.f, 4.f, 2.0f);
+        GLKVector3 spotDir = GLKVector3Make(0.27f, -1.0f, -0.6f);
+        program->SetUniform("light_pos[0]", lightPos);
+        program->SetUniform("light_attenuation[0]", 0.01f);
+        program->SetUniform("spot_dir[0]", spotDir);
+        program->SetUniform("spot_phi[0]", GLKMathDegreesToRadians(45.f));
+        program->SetUniform("spot_theta[0]", GLKMathDegreesToRadians(30.f));
+        program->SetUniform("spot_falloff[0]", 1.f);
+
+        program->SetUniform("diffuse_color[0]", GLKVector4Make(0.9f, 0.1f, 0.1f, 1.0f));
+        program->SetUniform("ambient_color[0]", GLKVector4Make(0.3f, 0.0f, 0.0f, 1.0f));
+        program->SetUniform("specular_color[0]", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
+        program->SetUniform("specular_shininess[0]", 50.0f);
+    }
+
+    {
+        // ライト2
+        GLKVector3 lightPos = GLKVector3Make(-3.f, 4.f, -1.0f);
+        GLKVector3 spotDir = GLKVector3Make(0.8f, -1.f, 0.3f);
+        program->SetUniform("light_pos[1]", lightPos);
+        program->SetUniform("light_attenuation[1]", 0.01f);
+        program->SetUniform("spot_dir[1]", spotDir);
+        program->SetUniform("spot_phi[1]", GLKMathDegreesToRadians(45.f));
+        program->SetUniform("spot_theta[1]", GLKMathDegreesToRadians(30.f));
+        program->SetUniform("spot_falloff[1]", 1.f);
+
+        program->SetUniform("diffuse_color[1]", GLKVector4Make(0.1f, 0.9f, 0.1f, 1.0f));
+        program->SetUniform("ambient_color[1]", GLKVector4Make(0.0f, 0.1f, 0.0f, 1.0f));
+        program->SetUniform("specular_color[1]", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
+        program->SetUniform("specular_shininess[1]", 50.0f);
+    }
+
+    {
+        // ライト3
+        GLKVector3 lightPos = GLKVector3Make(3.f, 4.f, 2.0f);
+        GLKVector3 spotDir = GLKVector3Make(-0.8f, -1.f, -0.6f);
+        program->SetUniform("light_pos[2]", lightPos);
+        program->SetUniform("light_attenuation[2]", 0.01f);
+        program->SetUniform("spot_dir[2]", spotDir);
+        program->SetUniform("spot_phi[2]", GLKMathDegreesToRadians(45.f));
+        program->SetUniform("spot_theta[2]", GLKMathDegreesToRadians(30.f));
+        program->SetUniform("spot_falloff[2]", 1.f);
+
+        program->SetUniform("diffuse_color[2]", GLKVector4Make(0.1f, 0.1f, 0.9f, 1.0f));
+        program->SetUniform("ambient_color[2]", GLKVector4Make(0.0f, 0.0f, 0.1f, 1.0f));
+        program->SetUniform("specular_color[2]", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
+        program->SetUniform("specular_shininess[2]", 50.0f);
+    }
+
     GLKMatrix4 modelMat = GLKMatrix4Identity;
     modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
     modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
     program->SetUniform("model_mat", modelMat);
     GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
     program->SetUniform("pvm_mat", pvmMat);
-
-    program->SetUniform("diffuse_color", GLKVector4Make(1.0f, 0.9f, 0.7f, 1.0f));
-    program->SetUniform("ambient_color", GLKVector4Make(0.2f, 0.0f, 0.0f, 1.0f));
-    program->SetUniform("specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
-    program->SetUniform("specular_shininess", 50.0f);
 
     program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.4f, 0.f));
     mesh->Draw();
