@@ -98,51 +98,51 @@ void Game::Render()
         // ライト1
         GLKVector3 lightPos = GLKVector3Make(-1.f, 4.f, 2.0f);
         GLKVector3 spotDir = GLKVector3Make(0.27f, -1.0f, -0.6f);
-        program->SetUniform("light_pos[0]", lightPos);
-        program->SetUniform("light_attenuation[0]", 0.01f);
-        program->SetUniform("spot_dir[0]", spotDir);
-        program->SetUniform("spot_phi[0]", GLKMathDegreesToRadians(45.f));
-        program->SetUniform("spot_theta[0]", GLKMathDegreesToRadians(30.f));
-        program->SetUniform("spot_falloff[0]", 1.f);
+        program->SetUniform("lights[0].light_pos", lightPos);
+        program->SetUniform("lights[0].light_attenuation", 0.01f);
+        program->SetUniform("lights[0].spot_dir", spotDir);
+        program->SetUniform("lights[0].spot_phi", GLKMathDegreesToRadians(45.f));
+        program->SetUniform("lights[0].spot_theta", GLKMathDegreesToRadians(30.f));
+        program->SetUniform("lights[0].spot_falloff", 1.f);
 
-        program->SetUniform("diffuse_color[0]", GLKVector4Make(0.9f, 0.1f, 0.1f, 1.0f));
-        program->SetUniform("ambient_color[0]", GLKVector4Make(0.3f, 0.0f, 0.0f, 1.0f));
-        program->SetUniform("specular_color[0]", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
-        program->SetUniform("specular_shininess[0]", 50.0f);
+        program->SetUniform("lights[0].diffuse_color", GLKVector4Make(0.9f, 0.1f, 0.1f, 1.0f));
+        program->SetUniform("lights[0].ambient_color", GLKVector4Make(0.3f, 0.0f, 0.0f, 1.0f));
+        program->SetUniform("lights[0].specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
+        program->SetUniform("lights[0].specular_shininess", 50.0f);
     }
 
     {
         // ライト2
         GLKVector3 lightPos = GLKVector3Make(-3.f, 4.f, -1.0f);
         GLKVector3 spotDir = GLKVector3Make(0.8f, -1.f, 0.3f);
-        program->SetUniform("light_pos[1]", lightPos);
-        program->SetUniform("light_attenuation[1]", 0.01f);
-        program->SetUniform("spot_dir[1]", spotDir);
-        program->SetUniform("spot_phi[1]", GLKMathDegreesToRadians(45.f));
-        program->SetUniform("spot_theta[1]", GLKMathDegreesToRadians(30.f));
-        program->SetUniform("spot_falloff[1]", 1.f);
+        program->SetUniform("lights[1].light_pos", lightPos);
+        program->SetUniform("lights[1].light_attenuation", 0.01f);
+        program->SetUniform("lights[1].spot_dir", spotDir);
+        program->SetUniform("lights[1].spot_phi", GLKMathDegreesToRadians(45.f));
+        program->SetUniform("lights[1].spot_theta", GLKMathDegreesToRadians(30.f));
+        program->SetUniform("lights[1].spot_falloff", 1.f);
 
-        program->SetUniform("diffuse_color[1]", GLKVector4Make(0.1f, 0.9f, 0.1f, 1.0f));
-        program->SetUniform("ambient_color[1]", GLKVector4Make(0.0f, 0.1f, 0.0f, 1.0f));
-        program->SetUniform("specular_color[1]", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
-        program->SetUniform("specular_shininess[1]", 50.0f);
+        program->SetUniform("lights[1].diffuse_color", GLKVector4Make(0.1f, 0.9f, 0.1f, 1.0f));
+        program->SetUniform("lights[1].ambient_color", GLKVector4Make(0.0f, 0.1f, 0.0f, 1.0f));
+        program->SetUniform("lights[1].specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
+        program->SetUniform("lights[1].specular_shininess", 50.0f);
     }
 
     {
         // ライト3
         GLKVector3 lightPos = GLKVector3Make(3.f, 4.f, 2.0f);
         GLKVector3 spotDir = GLKVector3Make(-0.8f, -1.f, -0.6f);
-        program->SetUniform("light_pos[2]", lightPos);
-        program->SetUniform("light_attenuation[2]", 0.01f);
-        program->SetUniform("spot_dir[2]", spotDir);
-        program->SetUniform("spot_phi[2]", GLKMathDegreesToRadians(45.f));
-        program->SetUniform("spot_theta[2]", GLKMathDegreesToRadians(30.f));
-        program->SetUniform("spot_falloff[2]", 1.f);
+        program->SetUniform("lights[2].light_pos", lightPos);
+        program->SetUniform("lights[2].light_attenuation", 0.01f);
+        program->SetUniform("lights[2].spot_dir", spotDir);
+        program->SetUniform("lights[2].spot_phi", GLKMathDegreesToRadians(45.f));
+        program->SetUniform("lights[2].spot_theta", GLKMathDegreesToRadians(30.f));
+        program->SetUniform("lights[2].spot_falloff", 1.f);
 
-        program->SetUniform("diffuse_color[2]", GLKVector4Make(0.1f, 0.1f, 0.9f, 1.0f));
-        program->SetUniform("ambient_color[2]", GLKVector4Make(0.0f, 0.0f, 0.1f, 1.0f));
-        program->SetUniform("specular_color[2]", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
-        program->SetUniform("specular_shininess[2]", 50.0f);
+        program->SetUniform("lights[2].diffuse_color", GLKVector4Make(0.1f, 0.1f, 0.9f, 1.0f));
+        program->SetUniform("lights[2].ambient_color", GLKVector4Make(0.0f, 0.0f, 0.1f, 1.0f));
+        program->SetUniform("lights[2].specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
+        program->SetUniform("lights[2].specular_shininess", 50.0f);
     }
 
     GLKMatrix4 modelMat = GLKMatrix4Identity;
