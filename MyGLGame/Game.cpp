@@ -19,6 +19,7 @@ Game::Game()
 
     // シェーダーのコンパイル
     program = new ShaderProgram("myshader.vsh", "myshader.fsh");
+    stencilShadowProgram = new ShaderProgram("stencilshadow.vsh", "stencilshadow.fsh");
 
     mesh = new Mesh("bunny.obj");
     planeMesh = new Mesh("plane.obj");
@@ -28,11 +29,12 @@ Game::Game()
     bPerspective = true; // 最初は透視投影
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 Game::~Game()
 {
+    delete stencilShadowProgram;
     delete program;
     delete planeMesh;
     delete mesh;
@@ -98,12 +100,16 @@ void Game::Render()
     eyeDir = GLKVector3Normalize(eyeDir);
     program->SetUniform("eye_dir", eyeDir);
 
+    // まずは普通に描画。深度情報をとっておく
 
     // 背景の上書き
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
     
+    // デプスだけ書き込む
+    glDepthMask(GL_TRUE);
+    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);//色情報を書き込まない
     GLKMatrix4 modelMat = GLKMatrix4Identity;
     modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
     modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
@@ -121,4 +127,39 @@ void Game::Render()
 
     program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.0f, 0.f));
     planeMesh->Draw();
+    
+    // シャドウボリュームをステンシルバッファに描き込む
+    stencilShadowProgram->Use();
+    stencilShadowProgram->SetUniform("light_pos", lightPos);
+    stencilShadowProgram->SetUniform("far", 50.f);
+    stencilShadowProgram->SetUniform("model_mat", modelMat);
+    stencilShadowProgram->SetUniform("pvm_mat", pvmMat);
+    glEnable(GL_STENCIL_TEST);
+    // 1回目の描き込みはシャドウボリュームの前面を+1でレンダリング
+    // 2回目の描き込みはシャドウボリュームの背面を-1でレンダリング
+    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);//色情報を書き込まない
+    glDepthMask(GL_FALSE);//デプス値を書き込まない
+    glStencilFunc(GL_ALWAYS, 0, ~0);
+    glEnable(GL_CULL_FACE);
+    glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
+    glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
+    mesh->Draw();
+    planeMesh->Draw();
+    
+    // ステンシルバッファを用いて影を描画する
+    program->Use();
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);//色書き込みON
+    glDisable(GL_CULL_FACE); //カリングOFF
+    glStencilFunc(GL_NOTEQUAL, 0, ~0); //ステンシル値が0じゃないの部分が影
+    glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    glBlendColor(0.1f, 0.1f, 0.1f, 0.5f);
+    glBlendFunc(GL_CONSTANT_COLOR, GL_ZERO);
+    mesh->Draw();
+    planeMesh->Draw();
+    glDisable(GL_BLEND);
+    
+    glDepthMask(GL_TRUE);
+    glDisable(GL_STENCIL_TEST);
 }

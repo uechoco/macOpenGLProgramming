@@ -18,6 +18,8 @@
 		78B4925B210366C90049A647 /* myshader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 78B4925A210366C90049A647 /* myshader.fsh */; };
 		78B4925E21040D3D0049A647 /* Texture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B4925C21040D3D0049A647 /* Texture.mm */; };
 		78EBF98D21733345008ACA73 /* plane.obj in Resources */ = {isa = PBXBuildFile; fileRef = 78EBF98C21733345008ACA73 /* plane.obj */; };
+		78ECF4FB2229752C00F0D765 /* stencilshadow.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 78ECF4FA2229752C00F0D765 /* stencilshadow.vsh */; };
+		78ECF4FD222978B300F0D765 /* stencilshadow.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 78ECF4FC222978B300F0D765 /* stencilshadow.fsh */; };
 		78F50175210D5A3C0061CA0C /* photo2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78F50174210D5A3B0061CA0C /* photo2.jpg */; };
 		B61BF8FA2145F6C0008B00E4 /* bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = B61BF8F92145F6C0008B00E4 /* bunny.obj */; };
 		B61BF8FC2145F6ED008B00E4 /* teapot.obj in Resources */ = {isa = PBXBuildFile; fileRef = B61BF8FB2145F6ED008B00E4 /* teapot.obj */; };
@@ -36,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		7874DD9D2144FE0B0089315C /* photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo.jpg; sourceTree = "<group>"; };
+		789E18502226CFA400C46C31 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		78B4924420FB07620049A647 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		78B4924620FB8BE70049A647 /* Game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		78B4924720FB8BE70049A647 /* Game.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Game.hpp; sourceTree = "<group>"; };
@@ -52,6 +55,8 @@
 		78B4925C21040D3D0049A647 /* Texture.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Texture.mm; sourceTree = "<group>"; };
 		78B4925D21040D3D0049A647 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		78EBF98C21733345008ACA73 /* plane.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plane.obj; sourceTree = "<group>"; };
+		78ECF4FA2229752C00F0D765 /* stencilshadow.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = stencilshadow.vsh; sourceTree = "<group>"; };
+		78ECF4FC222978B300F0D765 /* stencilshadow.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = stencilshadow.fsh; sourceTree = "<group>"; };
 		78F50174210D5A3B0061CA0C /* photo2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo2.jpg; sourceTree = "<group>"; };
 		B61BF8F92145F6C0008B00E4 /* bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny.obj; sourceTree = "<group>"; };
 		B61BF8FB2145F6ED008B00E4 /* teapot.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teapot.obj; sourceTree = "<group>"; };
@@ -133,6 +138,8 @@
 				78EBF98C21733345008ACA73 /* plane.obj */,
 				78B49258210366BB0049A647 /* myshader.vsh */,
 				78B4925A210366C90049A647 /* myshader.fsh */,
+				78ECF4FC222978B300F0D765 /* stencilshadow.fsh */,
+				78ECF4FA2229752C00F0D765 /* stencilshadow.vsh */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -168,6 +175,7 @@
 		B6B056B720FAF2A3004C4490 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				789E18502226CFA400C46C31 /* Metal.framework */,
 				B6DBCC23214B4582005A2EAB /* ModelIO.framework */,
 				78B4924420FB07620049A647 /* CoreVideo.framework */,
 				B6B056BA20FAF2B5004C4490 /* OpenGL.framework */,
@@ -234,6 +242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78ECF4FB2229752C00F0D765 /* stencilshadow.vsh in Resources */,
 				7874DD9E2144FE0B0089315C /* photo.jpg in Resources */,
 				B61BF8FA2145F6C0008B00E4 /* bunny.obj in Resources */,
 				78B4925B210366C90049A647 /* myshader.fsh in Resources */,
@@ -241,6 +250,7 @@
 				B6B056AA20FAF261004C4490 /* Assets.xcassets in Resources */,
 				78EBF98D21733345008ACA73 /* plane.obj in Resources */,
 				78B49259210366BB0049A647 /* myshader.vsh in Resources */,
+				78ECF4FD222978B300F0D765 /* stencilshadow.fsh in Resources */,
 				B6B056AD20FAF261004C4490 /* Main.storyboard in Resources */,
 				B61BF8FC2145F6ED008B00E4 /* teapot.obj in Resources */,
 			);

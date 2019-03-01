@@ -35,6 +35,8 @@ public:
 private:
     //! シェーダープログラム
     ShaderProgram* program = nullptr;
+    //! ステンシルシャドウのシェーダープログラム
+    ShaderProgram* stencilShadowProgram = nullptr;
     //! メッシュ
     Mesh*          mesh = nullptr;
     Mesh*          planeMesh = nullptr;
