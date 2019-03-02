@@ -38,6 +38,8 @@ private:
     ShaderProgram* program = nullptr;
     //! ステンシルシャドウのシェーダープログラム
     ShaderProgram* stencilShadowProgram = nullptr;
+    //! 影のシェーダープログラム
+    ShaderProgram* shadowProgram = nullptr;
     //! メッシュ
     Mesh*          mesh = nullptr;
     Mesh*          planeMesh = nullptr;

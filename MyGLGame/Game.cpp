@@ -20,6 +20,7 @@ Game::Game()
     // シェーダーのコンパイル
     program = new ShaderProgram("myshader.vsh", "myshader.fsh");
     stencilShadowProgram = new ShaderProgram("stencilshadow.vsh", "stencilshadow.fsh");
+    shadowProgram = new ShaderProgram("shadow.vsh", "shadow.fsh");
 
     //mesh = Mesh::CreateAsCube();
     mesh = new Mesh("bunny.obj");
@@ -35,6 +36,7 @@ Game::Game()
 
 Game::~Game()
 {
+    delete shadowProgram;
     delete stencilShadowProgram;
     delete program;
     delete planeMesh;
@@ -112,67 +114,67 @@ void Game::Render()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     
-    // デプスだけ書き込む
-    //glDepthMask(GL_TRUE);
-    //glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);//色情報を書き込まない
-    GLKMatrix4 modelMat = GLKMatrix4Identity;
-    //modelMat = GLKMatrix4Translate(modelMat, 0.0f, 0.f, 0.0f);
-    //modelMat = GLKMatrix4Scale(modelMat, 1.0f, 1.0f, 1.0f);
-    modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
-    modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
-    GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
-    //program->SetUniform("model_mat", modelMat);
-    //program->SetUniform("pvm_mat", pvmMat);
-    //program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.2f, 0.f));
-    stencilShadowProgram->Use();
-    stencilShadowProgram->SetUniform("light_pos", lightPos);
-    stencilShadowProgram->SetUniform("spot_dir", spotDir);
-    stencilShadowProgram->SetUniform("far", 5.f);
-    stencilShadowProgram->SetUniform("model_mat", modelMat);
-    stencilShadowProgram->SetUniform("pvm_mat", pvmMat);
-    mesh->Draw();
+    { // 通常レンダリングとデプスを書き込む
+        glDepthMask(GL_TRUE);
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+        //glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);//色情報を書き込まない
+        GLKMatrix4 modelMat = GLKMatrix4Identity;
+        modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
+        modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
+        GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
+        program->SetUniform("model_mat", modelMat);
+        program->SetUniform("pvm_mat", pvmMat);
+        program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.2f, 0.f));
+        mesh->Draw();
 
-    program->Use();
-    modelMat = GLKMatrix4Identity;
-    modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
-    modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
-    pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
-    program->SetUniform("model_mat", modelMat);
-    program->SetUniform("pvm_mat", pvmMat);
-    program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.0f, 0.f));
-    planeMesh->Draw();
-    /*
-    // シャドウボリュームをステンシルバッファに描き込む
-    stencilShadowProgram->Use();
-    //stencilShadowProgram->SetUniform("light_pos", lightPos);
-    //stencilShadowProgram->SetUniform("far", 50.f);
-    stencilShadowProgram->SetUniform("model_mat", modelMat);
-    stencilShadowProgram->SetUniform("pvm_mat", pvmMat);
-    glEnable(GL_STENCIL_TEST);
-    // 1回目の描き込みはシャドウボリュームの前面を+1でレンダリング
-    // 2回目の描き込みはシャドウボリュームの背面を-1でレンダリング
-    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);//色情報を書き込まない
-    glDepthMask(GL_FALSE);//デプス値を書き込まない
-    glStencilFunc(GL_ALWAYS, 0, ~0);
-    glEnable(GL_CULL_FACE);
-    glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
-    glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
-    mesh->Draw();
+        program->Use();
+        modelMat = GLKMatrix4Identity;
+        modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
+        modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
+        pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
+        program->SetUniform("model_mat", modelMat);
+        program->SetUniform("pvm_mat", pvmMat);
+        program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.0f, 0.f));
+        planeMesh->Draw();
+    }
+    { // シャドウボリュームをステンシルバッファに描き込む
+        stencilShadowProgram->Use();
+        GLKMatrix4 modelMat = GLKMatrix4Identity;
+        modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
+        modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
+        GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
+        stencilShadowProgram->SetUniform("light_pos", lightPos);
+        stencilShadowProgram->SetUniform("spot_dir", spotDir);
+        stencilShadowProgram->SetUniform("far", 5.f);
+        stencilShadowProgram->SetUniform("model_mat", modelMat);
+        stencilShadowProgram->SetUniform("pvm_mat", pvmMat);
+        // 1回目の描き込みはシャドウボリュームの前面を+1でレンダリング
+        // 2回目の描き込みはシャドウボリュームの背面を-1でレンダリング
+        glEnable(GL_STENCIL_TEST);
+        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);//色情報を書き込まない
+        glDepthMask(GL_FALSE);//デプス値を書き込まない
+        glStencilFunc(GL_ALWAYS, 0, ~0);
+        glEnable(GL_CULL_FACE);
+        glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
+        glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
+        mesh->Draw();
+    }
     
     // ステンシルバッファを用いて影を描画する
-    program->Use();
+    shadowProgram->Use();
+    GLKVector4 shadow_color = {0.f, 0.f, 0.f, 0.5f};
+    shadowProgram->SetUniform("shadow_color", shadow_color);
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);//色書き込みON
     glDisable(GL_CULL_FACE); //カリングOFF
     glStencilFunc(GL_NOTEQUAL, 0, ~0); //ステンシル値が0じゃないの部分が影
     glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD);
-    glBlendColor(0.1f, 0.1f, 0.1f, 0.5f);
-    glBlendFunc(GL_CONSTANT_COLOR, GL_ZERO);
-    mesh->Draw();
-    glDisable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    planeMesh->Draw();
     
+    glBlendFunc(GL_ONE, GL_ZERO);
+    glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);
     glDisable(GL_STENCIL_TEST);
-    */
 }
