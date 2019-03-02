@@ -21,8 +21,8 @@ Game::Game()
     program = new ShaderProgram("myshader.vsh", "myshader.fsh");
     stencilShadowProgram = new ShaderProgram("stencilshadow.vsh", "stencilshadow.fsh");
 
-    mesh = Mesh::CreateAsCube();
-    //mesh = new Mesh("bunny.obj");
+    //mesh = Mesh::CreateAsCube();
+    mesh = new Mesh("bunny.obj");
     planeMesh = new Mesh("plane.obj");
 
     cameraPos = GLKVector3Make(0.0f, 0.0f, 5.0f);
@@ -116,8 +116,10 @@ void Game::Render()
     //glDepthMask(GL_TRUE);
     //glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);//色情報を書き込まない
     GLKMatrix4 modelMat = GLKMatrix4Identity;
-    modelMat = GLKMatrix4Translate(modelMat, 0.0f, 0.f, 0.0f);
-    modelMat = GLKMatrix4Scale(modelMat, 1.0f, 1.0f, 1.0f);
+    //modelMat = GLKMatrix4Translate(modelMat, 0.0f, 0.f, 0.0f);
+    //modelMat = GLKMatrix4Scale(modelMat, 1.0f, 1.0f, 1.0f);
+    modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
+    modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
     GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
     //program->SetUniform("model_mat", modelMat);
     //program->SetUniform("pvm_mat", pvmMat);
