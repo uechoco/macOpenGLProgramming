@@ -43,7 +43,6 @@ Game::~Game()
 
 void Game::Render()
 {
-    /*
     if (Input::GetKey(KeyCode::A)) {
         cameraPos.x -= 2.0f * Time::deltaTime;
         bCameraDirty = true;
@@ -66,11 +65,10 @@ void Game::Render()
         bPerspective = !bPerspective;
         bCameraDirty = true;
     }
-    */
 
-    cameraPos.x = -cosf(Time::time * 0.6f) * 5.0f;
-    cameraPos.z = sinf(Time::time * 0.6f) * 5.0f;
-    bCameraDirty = true;
+    //cameraPos.x = -cosf(Time::time * 0.6f) * 5.0f;
+    //cameraPos.z = sinf(Time::time * 0.6f) * 5.0f;
+    //bCameraDirty = true;
     // レンダリングに使用するシェーダをセット
     program->Use();
 
@@ -120,17 +118,24 @@ void Game::Render()
     GLKMatrix4 modelMat = GLKMatrix4Identity;
     modelMat = GLKMatrix4Translate(modelMat, 0.0f, 0.f, 0.0f);
     modelMat = GLKMatrix4Scale(modelMat, 1.0f, 1.0f, 1.0f);
-    program->SetUniform("model_mat", modelMat);
     GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
-    program->SetUniform("pvm_mat", pvmMat);
-    program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.2f, 0.f));
+    //program->SetUniform("model_mat", modelMat);
+    //program->SetUniform("pvm_mat", pvmMat);
+    //program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.2f, 0.f));
+    stencilShadowProgram->Use();
+    stencilShadowProgram->SetUniform("light_pos", lightPos);
+    stencilShadowProgram->SetUniform("spot_dir", spotDir);
+    stencilShadowProgram->SetUniform("far", 5.f);
+    stencilShadowProgram->SetUniform("model_mat", modelMat);
+    stencilShadowProgram->SetUniform("pvm_mat", pvmMat);
     mesh->Draw();
 
+    program->Use();
     modelMat = GLKMatrix4Identity;
     modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
     modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
-    program->SetUniform("model_mat", modelMat);
     pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
+    program->SetUniform("model_mat", modelMat);
     program->SetUniform("pvm_mat", pvmMat);
     program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.0f, 0.f));
     planeMesh->Draw();
