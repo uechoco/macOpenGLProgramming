@@ -21,7 +21,8 @@ Game::Game()
     program = new ShaderProgram("myshader.vsh", "myshader.fsh");
     stencilShadowProgram = new ShaderProgram("stencilshadow.vsh", "stencilshadow.fsh");
 
-    mesh = new Mesh("bunny.obj");
+    mesh = Mesh::CreateAsCube();
+    //mesh = new Mesh("bunny.obj");
     planeMesh = new Mesh("plane.obj");
 
     cameraPos = GLKVector3Make(0.0f, 0.0f, 5.0f);
@@ -99,39 +100,45 @@ void Game::Render()
     GLKVector3 eyeDir = GLKVector3Subtract(cameraTarget, cameraPos);
     eyeDir = GLKVector3Normalize(eyeDir);
     program->SetUniform("eye_dir", eyeDir);
+    
+    
+    program->SetUniform("diffuse_color", GLKVector4Make(1.0f, 0.9f, 0.7f, 1.0f));
+    program->SetUniform("ambient_color", GLKVector4Make(0.2f, 0.0f, 0.0f, 1.0f));
+    program->SetUniform("specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
+    program->SetUniform("specular_shininess", 50.0f);
+    
 
     // まずは普通に描画。深度情報をとっておく
 
     // 背景の上書き
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
     
     // デプスだけ書き込む
-    glDepthMask(GL_TRUE);
-    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);//色情報を書き込まない
+    //glDepthMask(GL_TRUE);
+    //glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);//色情報を書き込まない
     GLKMatrix4 modelMat = GLKMatrix4Identity;
-    modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
-    modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
+    modelMat = GLKMatrix4Translate(modelMat, 0.0f, 0.f, 0.0f);
+    modelMat = GLKMatrix4Scale(modelMat, 1.0f, 1.0f, 1.0f);
     program->SetUniform("model_mat", modelMat);
     GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
     program->SetUniform("pvm_mat", pvmMat);
-
-    program->SetUniform("diffuse_color", GLKVector4Make(1.0f, 0.9f, 0.7f, 1.0f));
-    program->SetUniform("ambient_color", GLKVector4Make(0.2f, 0.0f, 0.0f, 1.0f));
-    program->SetUniform("specular_color", GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f));
-    program->SetUniform("specular_shininess", 50.0f);
-
-    program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.4f, 0.f));
+    program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.2f, 0.f));
     mesh->Draw();
 
+    modelMat = GLKMatrix4Identity;
+    modelMat = GLKMatrix4Translate(modelMat, 0.0f, -2.0f, 0.0f);
+    modelMat = GLKMatrix4Scale(modelMat, 20.0f, 20.0f, 20.0f);
+    program->SetUniform("model_mat", modelMat);
+    pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
+    program->SetUniform("pvm_mat", pvmMat);
     program->SetUniform("emissive_color", GLKVector4Make(0.f, 0.f, 0.0f, 0.f));
     planeMesh->Draw();
-    
+    /*
     // シャドウボリュームをステンシルバッファに描き込む
     stencilShadowProgram->Use();
-    stencilShadowProgram->SetUniform("light_pos", lightPos);
-    stencilShadowProgram->SetUniform("far", 50.f);
+    //stencilShadowProgram->SetUniform("light_pos", lightPos);
+    //stencilShadowProgram->SetUniform("far", 50.f);
     stencilShadowProgram->SetUniform("model_mat", modelMat);
     stencilShadowProgram->SetUniform("pvm_mat", pvmMat);
     glEnable(GL_STENCIL_TEST);
@@ -144,7 +151,6 @@ void Game::Render()
     glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
     glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
     mesh->Draw();
-    planeMesh->Draw();
     
     // ステンシルバッファを用いて影を描画する
     program->Use();
@@ -157,9 +163,9 @@ void Game::Render()
     glBlendColor(0.1f, 0.1f, 0.1f, 0.5f);
     glBlendFunc(GL_CONSTANT_COLOR, GL_ZERO);
     mesh->Draw();
-    planeMesh->Draw();
     glDisable(GL_BLEND);
     
     glDepthMask(GL_TRUE);
     glDisable(GL_STENCIL_TEST);
+    */
 }

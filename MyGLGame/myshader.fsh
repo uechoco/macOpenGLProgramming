@@ -21,7 +21,6 @@ layout (location=0) out vec4 frag_color;
 
 void main()
 {
-
     vec3 light_vec_dir = v_position - light_pos;
     float light_len = length(light_vec_dir);
     float attenuation = 1.0 / (light_attenuation * light_len * light_len);
@@ -57,4 +56,6 @@ void main()
         float specular = pow(clamp(dot(normal, half_vec), 0.0, 1.0), specular_shininess);
         frag_color = v_color * diffuse_color * diffuse_power * attenuation + ambient_color + specular_color * specular + emissive_color;
     }
+ 
+    //frag_color = ambient_color + emissive_color;
 }

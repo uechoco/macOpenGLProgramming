@@ -26,7 +26,12 @@ public:
     Mesh(const std::string& filename, const GLKVector4& color = {1.0f, 1.0f, 1.0f, 1.0f}, float smoothingLevel = 1.0f);
     ~Mesh();
     
+    static Mesh* CreateAsCube();
+    
     void Draw() const;
+    
+private:
+    Mesh() = default;
 };
 
 #endif /* Mesh_hpp */

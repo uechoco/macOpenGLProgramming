@@ -33,6 +33,7 @@ public:
     void Render();
 
 private:
+    
     //! シェーダープログラム
     ShaderProgram* program = nullptr;
     //! ステンシルシャドウのシェーダープログラム
@@ -40,7 +41,7 @@ private:
     //! メッシュ
     Mesh*          mesh = nullptr;
     Mesh*          planeMesh = nullptr;
-
+    
     //! カメラの位置
     GLKVector3              cameraPos;
     //! PV行列
