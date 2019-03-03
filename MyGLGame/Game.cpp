@@ -164,6 +164,16 @@ void Game::Render()
         glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, GL_INCR_WRAP);
         glStencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR_WRAP);
         mesh->Draw();
+        /*
+        glEnable(GL_CULL_FACE); // カリング有効
+        glCullFace(GL_BACK); // 前面のみ
+        glStencilOp(GL_KEEP, GL_KEEP, GL_INCR); // +1を描く
+        mesh->Draw();
+        glCullFace(GL_FRONT); // 背面のみ
+        glStencilOp(GL_KEEP, GL_KEEP, GL_DECR); // -1を描く
+        mesh->Draw();
+        glDisable(GL_CULL_FACE); // カリング無効
+         */
         //glEnable(GL_CULL_FACE);
         //glDisable(GL_DEPTH_CLAMP);
     }
