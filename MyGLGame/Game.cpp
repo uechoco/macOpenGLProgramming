@@ -150,7 +150,7 @@ void Game::Render()
         GLKMatrix4 pvmMat = GLKMatrix4Multiply(projViewMat, modelMat);
         stencilShadowProgram->SetUniform("light_pos", lightPos);
         stencilShadowProgram->SetUniform("spot_dir", spotDir);
-        stencilShadowProgram->SetUniform("far", 5.f);
+        stencilShadowProgram->SetUniform("far", 50.f);
         stencilShadowProgram->SetUniform("model_mat", modelMat);
         stencilShadowProgram->SetUniform("pvm_mat", pvmMat);
         // 1回目の描き込みはシャドウボリュームの前面を+1でレンダリング
