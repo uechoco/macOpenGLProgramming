@@ -43,6 +43,7 @@ private:
     //! メッシュ
     Mesh*          mesh = nullptr;
     Mesh*          planeMesh = nullptr;
+    Mesh*          planeStencilMesh = nullptr;
     
     //! カメラの位置
     GLKVector3              cameraPos;

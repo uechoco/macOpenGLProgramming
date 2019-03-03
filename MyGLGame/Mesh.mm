@@ -240,6 +240,64 @@ Mesh* Mesh::CreateAsCube()
     return mesh;
 }
 
+Mesh* Mesh::CreateAsPlane()
+{
+    Mesh* mesh = new Mesh();
+    
+    std::vector<VertexData> data;
+    // 左下
+    data.push_back({ { -1.0f, -1.0f,  0.f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.0f, -1.0f,  0.f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ { -1.0f,  1.0f,  0.f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.0f,  1.0f,  0.f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ { -1.0f,  1.0f,  0.f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    data.push_back({ {  1.0f, -1.0f,  0.f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.75f, 1.0f, 1.0f } });
+    
+    
+    GLKVector3 aabbMax, aabbMin;
+    aabbMax.x = INT_MIN;
+    aabbMax.y = INT_MIN;
+    aabbMax.z = INT_MIN;
+    aabbMin.x = INT_MAX;
+    aabbMin.y = INT_MAX;
+    aabbMin.z = INT_MAX;
+    
+    std::vector<GLushort> indices;
+    for (size_t i = 0; i < data.size(); i++) {
+        indices.push_back(i);
+        
+        const VertexData& v = data[i];
+        if (aabbMax.x < v.pos.x) { aabbMax.x = v.pos.x; }
+        if (aabbMax.y < v.pos.y) { aabbMax.y = v.pos.y; }
+        if (aabbMax.z < v.pos.z) { aabbMax.z = v.pos.z; }
+        if (aabbMin.x > v.pos.x) { aabbMin.x = v.pos.x; }
+        if (aabbMin.y > v.pos.y) { aabbMin.y = v.pos.y; }
+        if (aabbMin.z > v.pos.z) { aabbMin.z = v.pos.z; }
+    }
+    glGenBuffers(1, &mesh->vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(VertexData) * data.size(), &data[0], GL_STATIC_DRAW);
+    
+    glGenVertexArrays(1, &mesh->vao);
+    glBindVertexArray(mesh->vao);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData *)0)->pos);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData *)0)->normal);
+    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(VertexData), &((VertexData *)0)->color);
+    
+    glGenBuffers(1, &mesh->ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort) * indices.size(), &indices[0], GL_STATIC_DRAW);
+    
+    mesh->indexCount = (GLsizei)data.size();
+    mesh->indexType = GL_UNSIGNED_SHORT;
+    
+    printf("aabb min(%2f,%2f,%2f)-max(%2f,%2f,%2f)",
+           aabbMin.x, aabbMin.y, aabbMin.z,
+           aabbMax.x, aabbMax.y, aabbMax.z);
+    
+    return mesh;
+}
+
 void Mesh::Draw() const
 {
     glBindVertexArray(vao);

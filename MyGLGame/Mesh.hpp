@@ -27,6 +27,7 @@ public:
     ~Mesh();
     
     static Mesh* CreateAsCube();
+    static Mesh* CreateAsPlane();
     
     void Draw() const;
     
