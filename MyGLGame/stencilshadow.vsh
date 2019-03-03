@@ -29,6 +29,7 @@ void main()
         vec3 move_vec = (far - light_len) * light_dirN;
         moved_pos += move_vec;
     }
+    moved_pos += vec3(0, 0, -0.02); // 奥に押し出すオフセット
     
     gl_Position = vec4(moved_pos, 1.0) * pvm_mat;
 }

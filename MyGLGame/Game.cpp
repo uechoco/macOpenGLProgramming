@@ -15,7 +15,6 @@
 
 Game::Game()
 {
-    glEnable(GL_DEPTH_TEST);
 
     // シェーダーのコンパイル
     program = new ShaderProgram("myshader.vsh", "myshader.fsh");
@@ -74,6 +73,7 @@ void Game::Render()
     //cameraPos.z = sinf(Time::time * 0.6f) * 5.0f;
     //bCameraDirty = true;
     // レンダリングに使用するシェーダをセット
+    glEnable(GL_DEPTH_TEST);
     program->Use();
 
     GLKVector3 lightPos = GLKVector3Make(-1.f, 1.f, 2.0f);
@@ -170,8 +170,9 @@ void Game::Render()
     
     {// ステンシルバッファを用いて影を描画する
         shadowProgram->Use();
-        GLKVector4 shadow_color = {0.f, 0.8f, 0.f, 0.5f};
+        GLKVector4 shadow_color = {0.f, 0.0f, 0.f, 0.5f};
         shadowProgram->SetUniform("shadow_color", shadow_color);
+        glDisable(GL_DEPTH_TEST);
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);//色書き込みON
         glStencilFunc(GL_NOTEQUAL, 0, ~0); //ステンシル値が0以外の部分が影
         glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
