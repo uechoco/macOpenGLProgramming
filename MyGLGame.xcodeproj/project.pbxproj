@@ -19,6 +19,7 @@
 		78B4925E21040D3D0049A647 /* Texture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 78B4925C21040D3D0049A647 /* Texture.mm */; };
 		78EBF98D21733345008ACA73 /* plane.obj in Resources */ = {isa = PBXBuildFile; fileRef = 78EBF98C21733345008ACA73 /* plane.obj */; };
 		78F50175210D5A3C0061CA0C /* photo2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 78F50174210D5A3B0061CA0C /* photo2.jpg */; };
+		78FD219D22D3753600F2FA53 /* Matrix4x4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78FD219B22D3753600F2FA53 /* Matrix4x4.cpp */; };
 		B61BF8FA2145F6C0008B00E4 /* bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = B61BF8F92145F6C0008B00E4 /* bunny.obj */; };
 		B61BF8FC2145F6ED008B00E4 /* teapot.obj in Resources */ = {isa = PBXBuildFile; fileRef = B61BF8FB2145F6ED008B00E4 /* teapot.obj */; };
 		B6B056A520FAF261004C4490 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B056A420FAF261004C4490 /* AppDelegate.m */; };
@@ -53,6 +54,8 @@
 		78B4925D21040D3D0049A647 /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
 		78EBF98C21733345008ACA73 /* plane.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plane.obj; sourceTree = "<group>"; };
 		78F50174210D5A3B0061CA0C /* photo2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo2.jpg; sourceTree = "<group>"; };
+		78FD219B22D3753600F2FA53 /* Matrix4x4.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix4x4.cpp; sourceTree = "<group>"; };
+		78FD219C22D3753600F2FA53 /* Matrix4x4.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Matrix4x4.hpp; sourceTree = "<group>"; };
 		B61BF8F92145F6C0008B00E4 /* bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny.obj; sourceTree = "<group>"; };
 		B61BF8FB2145F6ED008B00E4 /* teapot.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teapot.obj; sourceTree = "<group>"; };
 		B6B056A020FAF261004C4490 /* MyGLGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGLGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +122,8 @@
 				B6B056C020FAF69B004C4490 /* WindowController.m */,
 				78B4925220FCCC720049A647 /* Input.mm */,
 				78B4925320FCCC720049A647 /* Input.hpp */,
+				78FD219B22D3753600F2FA53 /* Matrix4x4.cpp */,
+				78FD219C22D3753600F2FA53 /* Matrix4x4.hpp */,
 			);
 			name = GameLibrary;
 			sourceTree = "<group>";
@@ -259,6 +264,7 @@
 				78B4924B20FB8D780049A647 /* StringSupport.mm in Sources */,
 				78B49257210364D00049A647 /* Shader.cpp in Sources */,
 				B6B056BE20FAF2E2004C4490 /* MyGLView.mm in Sources */,
+				78FD219D22D3753600F2FA53 /* Matrix4x4.cpp in Sources */,
 				B6DBCC27214B45A1005A2EAB /* Mesh.mm in Sources */,
 				78B4924820FB8BE70049A647 /* Game.cpp in Sources */,
 				78B4925420FCCC720049A647 /* Input.mm in Sources */,
